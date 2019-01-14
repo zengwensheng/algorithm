@@ -13,6 +13,7 @@ import java.util.function.Consumer;
  */
 public interface SortUtil {
 
+
     static Integer[] generateRandomArray(int n, int rangeL, int rangeR) {
         assert (rangeL <= rangeR);
 
