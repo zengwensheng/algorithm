@@ -93,14 +93,12 @@ public interface SortUtil {
         Instant startInstant = Instant.now();
         consumer.accept(comparableArray);
         Instant endInstant = Instant.now();
-     //   if (!isSorted(comparableArray)) {
-       //     System.out.println("排序不正确");
-         //   return;
-       // }
+        if (!isSorted(comparableArray)) {
+            System.out.println("排序不正确");
+            return;
+        }
         System.out.println(sortName + ": " + Duration.between(startInstant, endInstant).toMillis() + "ms");
     }
-
-
 
 
 }
