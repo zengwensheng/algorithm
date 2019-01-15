@@ -14,13 +14,21 @@ import java.util.function.Consumer;
 public interface SortUtil {
 
 
+    /**
+     * 生成一组随机数组 左闭右开
+     *
+     * @param n      数组大小
+     * @param rangeL 最小值
+     * @param rangeR 最大值
+     * @return
+     */
     static Integer[] generateRandomArray(int n, int rangeL, int rangeR) {
         assert (rangeL <= rangeR);
 
         Integer[] integers = new Integer[n];
         Random random = new Random();
-        for (int i=0;i<n;i++){
-            integers[i] = random.nextInt(rangeR-rangeL+1)+rangeL;
+        for (int i = 0; i < n; i++) {
+            integers[i] = random.nextInt(rangeR - rangeL) + rangeL + 1;
         }
 
         return integers;
@@ -28,11 +36,24 @@ public interface SortUtil {
     }
 
 
-
+    /**
+     * 打印数组元素
+     *
+     * @param arr
+     */
     static void printArray(Object[] arr) {
-        Arrays.stream(arr).forEach(System.out::print);
+        Arrays.stream(arr).forEach(o -> {
+            System.out.print(o + "  ");
+        });
+        System.out.println();
     }
 
+    /**
+     * 判断数组排序是否正确
+     *
+     * @param comparableArray
+     * @return
+     */
     static boolean isSorted(Comparable[] comparableArray) {
 
         Comparable old = null;
@@ -43,11 +64,11 @@ public interface SortUtil {
                 continue;
             }
 
-            if (comparableInteger == null) {
+            if (comparableInteger == null || comparableInteger == 0) {
                 comparableInteger = comparable.compareTo(old);
             }
 
-            if (comparable.compareTo(old) != comparableInteger) {
+            if (comparable.compareTo(old) != comparableInteger && comparable.compareTo(old) != 0) {
                 return false;
             }
 
@@ -60,18 +81,26 @@ public interface SortUtil {
         return true;
     }
 
-
-    static void calculateTime(String sortName, Consumer<Comparable<Object>[]> consumer, Comparable<Object>[] comparableArray) {
+    /**
+     * 计算
+     *
+     * @param sortName
+     * @param consumer
+     * @param comparableArray
+     */
+    static void calculateTime(String sortName, Consumer<Comparable[]> consumer, Comparable[] comparableArray) {
 
         Instant startInstant = Instant.now();
         consumer.accept(comparableArray);
         Instant endInstant = Instant.now();
-        if (!isSorted(comparableArray)) {
-            System.out.println("排序不正确");
-            return;
-        }
+     //   if (!isSorted(comparableArray)) {
+       //     System.out.println("排序不正确");
+         //   return;
+       // }
         System.out.println(sortName + ": " + Duration.between(startInstant, endInstant).toMillis() + "ms");
     }
+
+
 
 
 }
