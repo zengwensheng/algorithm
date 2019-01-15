@@ -8,7 +8,9 @@ import com.zws.util.SortUtil;
  * date 2019/1/14
  *
  * 等差数列是指从第二项起，每一项与它的前一项的差等于同一个常数的一种数列，常用A、P表示。这个常数叫做等差数列的公差，公差常用字母d表示。
- * 例如：1,3,5,7,9……2n-1。通项公式为：an=a1+(n-1)*d。首项a1=1，公差d=2。前n项和公式为：Sn=a1*n+[n*(n-1)*d]/2或Sn=[n*(a1+an)]/2。注意：以上n均属于正整数。
+ * 例如：1,3,5,7,9……2n-1。
+ * 通项公式为：an=a1+(n-1)*d。首项a1=1，公差d=2。
+ * 前n项和公式为：Sn=a1*n+[n*(n-1)*d]/2或Sn=[n*(a1+an)]/2。注意：以上n均属于正整数。
  *
  * 选择排序: 从数组中选择一个最小的数字，将这个值放到数组的第一个
  *
@@ -24,13 +26,13 @@ public class SelectionSortExample {
 
     public static void main(String[] args) {
 
-        int number =1000000;
+        int number =1000;
         int rangeL = 0;
-        int rangeR = 1000000;
+        int rangeR = 1000;
 
         Integer[] arrays = SortUtil.generateRandomArray(number,rangeL,rangeR);
         SortUtil.calculateTime("selection sort",SelectionSortExample::selectionSort,arrays);
-       // SortUtil.printArray(arrays);
+        SortUtil.printArray(arrays);
 
 
 
