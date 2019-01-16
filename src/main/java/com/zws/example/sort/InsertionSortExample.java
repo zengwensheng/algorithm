@@ -87,20 +87,22 @@ public class InsertionSortExample {
 
     /**
      * 插入排序 从小到大  算法复杂度 O(n^2) 平方阶
-     * <p>
-     * <p>
-     * 代码                                              执行次数
-     * for (int i = 1;                                    n+1
-     * Comparable indexComparable                          n
-     * int j;                                              n
-     * for (j = i                                       最好：2n  最坏：(n^2-n)/2+n
-     * comparableArray[j]                               最好：0   最坏：(n^2-n)/2
-     * <p>
+     *
+     *
+     * 代码                                                  执行次数
+     * Comparable indexComparable                              n
+     * int j;                                                  n
+     * compareTo                                       最好：0   最坏：(n^2-n)/2
+     *  comparableArray[j] = comparableArray[j - 1]    最好：0   最坏：(n^2-n)/2
+     *  comparableArray[j] = indexComparable;                  n
+     *
+     *
      * 求时间复杂度：
      * 根据以上得出时间频度
-     * 最优： T(n) =  5n+1  得出时间复杂度为（找到最高次项，去掉最高次项系数得出：） O(n)
-     * 最差： T(n) = n^2+2n+1  得出时间复杂度为（找到最高次项，去掉最高次项系数得出：）  O(n^2)
-     * <p>
+     * 最优： T(n) =  3n  得出时间复杂度为（找到最高次项，去掉最高次项系数得出：） O(n)
+     * 最差： T(n) = n^2+n  得出时间复杂度为（找到最高次项，去掉最高次项系数得出：）  O(n^2)
+     *
+     *
      * 由此得出上面测试的结论：
      * 在数组近乎是顺序的情况下 此时的时间复杂度为O(n)
      * 反之时间复杂度为O(n^2)
@@ -111,7 +113,10 @@ public class InsertionSortExample {
         for (int i = 1; i < comparableArray.length; i++) {
             Comparable indexComparable = comparableArray[i];
             int j;
-            for (j = i; j > 0 && indexComparable.compareTo(comparableArray[j - 1]) == -1; j--) {
+            for (j = i; j > 0 ; j--) {
+                if(indexComparable.compareTo(comparableArray[j - 1]) != -1) {
+                   break;
+                }
                 comparableArray[j] = comparableArray[j - 1];
             }
             comparableArray[j] = indexComparable;

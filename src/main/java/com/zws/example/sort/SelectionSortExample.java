@@ -58,16 +58,15 @@ public class SelectionSortExample {
      * 等差数列求和得： (1+n-1)*(n-1)/2
      *
      * 代码                                              执行次数
-     * for (int i = 0;...                                 n + 1
-     * int minIndex = i;                                    n
-     * for (int j = i + 1...                          等差数列求和：(n^2-n)/2+n
-     * if (comparableArray...                       最好：(n^2-n)/2   最差； n^2-n
-     * if(i==minIndex){                                 最好：2n  最差；4n
+     *  int minIndex = i;                                   n
+     *  compareTo                                       (n^2-n)/2
+     *  minIndex = j;                             最好：0  最差； (n^2-n)/2
+     *  SortUtil.swap(....                            最好：0 最差；3n
      *
      * 求时间复杂度：
      *  根据以上得出时间频度：
-     *   最优： T(n) =  n^2+2n+1  得出时间复杂度为（找到最高次项，去掉最高次项系数得出：）  O(n^2)
-     *   最差： T(n) =  1.5n^2+3.5n+1 得出时间复杂度为（找到最高次项，去掉最高次项系数得出：）  O(n^2)
+     *   最优： T(n) =  0.5n^2+0.5n  得出时间复杂度为（找到最高次项，去掉最高次项系数得出：）  O(n^2)
+     *   最差： T(n) =  n^2+2n 得出时间复杂度为（找到最高次项，去掉最高次项系数得出：）  O(n^2)
      *  所以得出时间无论什么情况下复杂度为 O(n^2)
      *
      * @param comparableArray
