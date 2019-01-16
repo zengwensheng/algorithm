@@ -37,6 +37,32 @@ public interface SortUtil {
 
 
     /**
+     * 生成一组近乎有序的数组
+     *
+     * @param n      数组大小
+     * @param swapTimes 这个数越小数字 数组越有序
+     * @return
+     */
+    static Integer[] generateNearlyOrderedArray(int n,int swapTimes) {
+
+        Integer[] integers = new Integer[n];
+        for (int i = 0; i < n; i++) {
+                integers[i] = i;
+        }
+
+        Random random = new Random();
+        for(int i =0;i<swapTimes;i++){
+            swap(integers, random.nextInt(n),random.nextInt(n));
+        }
+
+        return integers;
+
+    }
+
+
+
+
+    /**
      * 打印数组元素
      *
      * @param arr
@@ -98,6 +124,19 @@ public interface SortUtil {
             return;
         }
         System.out.println(sortName + ": " + Duration.between(startInstant, endInstant).toMillis() + "ms");
+    }
+
+    /**
+     * 数组中位置交换
+     * @param arr
+     * @param i
+     * @param j
+     */
+    static void swap(Object[] arr, int i, int j) {
+        Object obj = arr[i];
+        arr[i] = arr[j];
+        arr[j] = obj;
+
     }
 
 
