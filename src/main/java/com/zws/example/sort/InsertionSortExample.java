@@ -60,7 +60,7 @@ public class InsertionSortExample {
      *
      * @param comparableArray
      */
-    public static void insertionSort(Comparable[] comparableArray) {
+    private static void insertionSort(Comparable[] comparableArray) {
         for (int i = 1; i < comparableArray.length; i++) {
             for (int j = i;
                  j > 0 && comparableArray[j].compareTo(comparableArray[j - 1]) == -1;
@@ -75,7 +75,7 @@ public class InsertionSortExample {
      *
      * @param comparableArray
      */
-    public static void insertionSortAdvance1(Comparable[] comparableArray) {
+    private static void insertionSortAdvance1(Comparable[] comparableArray) {
         for (int i = 1; i < comparableArray.length; i++) {
             for (int j = i; j > 0 && comparableArray[j].compareTo(comparableArray[j - 1]) == -1; j--) {
                 SortUtil.swap(comparableArray, j, j - 1);
@@ -107,7 +107,7 @@ public class InsertionSortExample {
      *
      * @param comparableArray
      */
-    public static void insertionSortAdvance2(Comparable[] comparableArray) {
+    private static void insertionSortAdvance2(Comparable[] comparableArray) {
         for (int i = 1; i < comparableArray.length; i++) {
             Comparable indexComparable = comparableArray[i];
             int j;
