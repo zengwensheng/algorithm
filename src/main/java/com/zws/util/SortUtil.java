@@ -10,6 +10,11 @@ import java.util.function.Consumer;
  * @author zws
  * @email 2848392861@qq.com
  * date 2019/1/14
+ *
+ * 常见的算法复杂度：
+ *    常数阶O(1),对数阶O(log2n)(以2为底n的对数，下同),线性阶O(n),
+ *    线性对数阶O(nlog2n),平方阶O(n^2)，立方阶O(n^3)
+ *
  */
 public interface SortUtil {
 
