@@ -8,15 +8,17 @@ import com.zws.util.SortUtil;
  * date 2019/1/16
  *
  * 插入排序
- * 从数组第二个开始，跟数组左边的比较，找到合适的位置插入
+ *   每步将一个待排序的数组，按其关键码值的大小插入前面已经排序的数组中适当位置上，直到全部插入完为止。
+ *稳定性： 稳定，不会打乱数组中两个相等元素的顺序
+ *
  */
 public class InsertionSortExample {
 
     public static void main(String[] args) {
 
-        int number = 100000;
+        int number = 10000;
         int rangeL = 0;
-        int rangeR = 1000;
+        int rangeR = 10000;
         int swapTimes = 0;
 
 
@@ -59,14 +61,19 @@ public class InsertionSortExample {
      * 插入排序 从小到大
      *
      *
-     * 代码                                                  执行次数
+     * 代码                                                  执行次数                         声明变量次数
      * compareTo                                              (n^2-n)/2
-     * swap                                               最优：1.5n^2-1.5n  最差：0
+     * swap                                               最差：1.5n^2-1.5n  最优：0           最差：(n^2-n)/2  最优：0
      * 求时间复杂度：
      * 根据以上得出时间频度
      * 最优： T(n) =  0.5n^2-0.5n  得出时间复杂度为（找到最高次项，去掉最高次项系数得出：）O(n^2)
      * 最差： T(n) = 2n^2+2n  得出时间复杂度为（找到最高次项，去掉最高次项系数得出：）  O(n^2)
      *
+     *
+     * 求空间复杂度：
+     *  根据以上（声明变量次数）得出所消耗的空间：
+     *   最优： T(n) =  0  得出空间复杂度为（找到最高次项，去掉最高次项系数得出：）  O(0)
+     *   最差： T(n) = 0.5n^2-0.5n   得出空间复杂度为（找到最高次项，去掉最高次项系数得出：）  O(n^2)
      *
      * @param comparableArray
      */
@@ -83,15 +90,19 @@ public class InsertionSortExample {
     /**
      * 插入排序 从小到大
      *
-     *
-     * 代码                                                  执行次数
+     * 代码                                                  执行次数                       声明变量次数
      * compareTo                                              n
-     * swap                                               最优：1.5n^2-1.5n  最差：0
+     * swap                                               最差：1.5n^2-1.5n 最优：0          最优：(n^2-n)/2  最差：0
      * 求时间复杂度：
      * 根据以上得出时间频度
-     * 最优： T(n) =  n  得出时间复杂度为（找到最高次项，去掉最高次项系数得出：）O(n^2)
+     * 最优： T(n) =  n  得出时间复杂度为（找到最高次项，去掉最高次项系数得出：）O(n)
      * 最差： T(n) = 1.5n^2-2.5n  得出时间复杂度为（找到最高次项，去掉最高次项系数得出：）  O(n^2)
      *
+     *
+     * 求空间复杂度：
+     *  根据以上（声明变量次数）得出所消耗的空间：
+     *   最优： T(n) =  0  得出空间复杂度为（找到最高次项，去掉最高次项系数得出：）  O(0)
+     *   最差： T(n) = 0.5n^2-0.5n   得出空间复杂度为（找到最高次项，去掉最高次项系数得出：）  O(n^2)
      *
      * @param comparableArray
      */
@@ -111,8 +122,8 @@ public class InsertionSortExample {
      * 通过数组右移的方式，来减少数组交换的次数
      *
      *
-     * 代码                                                  执行次数
-     * Comparable indexComparable                              n
+     * 代码                                                  执行次数                     声明变量次数
+     * indexComparable  = comparableArray[i];                              n
      * compareTo                                       最好：n   最坏：(n^2-n)/2+n
      * comparableArray[j] = comparableArray[j - 1]    最好：0   最坏：(n^2-n)/2
      * comparableArray[j] = indexComparable;                  n
@@ -123,16 +134,24 @@ public class InsertionSortExample {
      * 最优： T(n) =  3n  得出时间复杂度为（找到最高次项，去掉最高次项系数得出：） O(n)
      * 最差： T(n) = n^2+2n  得出时间复杂度为（找到最高次项，去掉最高次项系数得出：）  O(n^2)
      *
-     *
      * 由此得出上面测试的结论：
      * 在数组近乎是顺序的情况下 此时的时间复杂度为O(n)
      * 反之时间复杂度为O(n^2)
      *
+     *
+     *
+     * 求空间复杂度：
+     *  根据以上（声明变量次数）得出所消耗的空间：
+     *    T(n) =  0  得出空间复杂度为（找到最高次项，去掉最高次项系数得出：）  O(0)
+     *
+     *
+     *
      * @param comparableArray
      */
     private static void insertionSortAdvance2(Comparable[] comparableArray) {
+        Comparable indexComparable;
         for (int i = 1; i < comparableArray.length; i++) {
-            Comparable indexComparable = comparableArray[i];
+            indexComparable  = comparableArray[i];
             int j;
             for (j = i; j > 0 && indexComparable.compareTo(comparableArray[j - 1]) == -1; j--) {
                 comparableArray[j] = comparableArray[j - 1];
