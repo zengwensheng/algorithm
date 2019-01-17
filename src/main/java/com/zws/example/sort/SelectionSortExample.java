@@ -18,7 +18,7 @@ public class SelectionSortExample {
 
     public static void main(String[] args) {
 
-        int number =100000;
+        int number =10;
         int rangeL = 0;
         int rangeR = 1000;
         int swapTimes = 0;
@@ -74,9 +74,8 @@ public class SelectionSortExample {
     private static void selectionSort(Comparable[] comparableArray) {
         for (int i = 0; i < comparableArray.length; i++) {
             int minIndex = i;
-            for (int j = i + 1; j < comparableArray.length; j++) {
-
-                if (comparableArray[minIndex].compareTo(comparableArray[j]) == 1) {
+            for (int j = i + 1; j < comparableArray.length ; j++) {
+                if(comparableArray[minIndex].compareTo(comparableArray[j]) == 1) {
                     minIndex = j;
                 }
             }
