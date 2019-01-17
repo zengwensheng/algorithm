@@ -6,7 +6,7 @@ import com.zws.util.SortUtil;
  * @author zws
  * @email 2848392861@qq.com
  * date 2019/1/16
- * <p>
+ *
  * 插入排序
  * 从数组第二个开始，跟数组左边的比较，找到合适的位置插入
  */
@@ -56,7 +56,7 @@ public class InsertionSortExample {
     }
 
     /**
-     * 插入排序 从小到大  算法复杂度 O(n^2) 平方阶
+     * 插入排序 从小到大
      *
      *
      * 代码                                                  执行次数
@@ -81,7 +81,7 @@ public class InsertionSortExample {
     }
 
     /**
-     * 插入排序 从小到大  算法复杂度 O(n^2) 平方阶
+     * 插入排序 从小到大
      *
      *
      * 代码                                                  执行次数
@@ -106,7 +106,7 @@ public class InsertionSortExample {
 
 
     /**
-     * 插入排序 从小到大  算法复杂度 O(n^2) 平方阶
+     * 插入排序 从小到大
      *
      * 通过数组右移的方式，来减少数组交换的次数
      *
