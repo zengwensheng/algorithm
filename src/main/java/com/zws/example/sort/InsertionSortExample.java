@@ -16,13 +16,13 @@ public class InsertionSortExample {
 
     public static void main(String[] args) {
 
-        int number = 10000;
+        int n = 10000;
         int rangeL = 0;
         int rangeR = 10000;
         int swapTimes = 0;
 
 
-        Integer[] arrays = SortUtil.generateRandomArray(number, rangeL, rangeR);
+        Integer[] arrays = SortUtil.generateRandomArray(n, rangeL, rangeR);
         Integer[] arraysAdvance1 = arrays.clone();
         Integer[] arraysAdvance2 = arrays.clone();
 
@@ -42,7 +42,7 @@ public class InsertionSortExample {
         /**
          * 最优测试
          */
-        arrays = SortUtil.generateNearlyOrderedArray(number, swapTimes);
+        arrays = SortUtil.generateNearlyOrderedArray(n, swapTimes);
         arraysAdvance1 = arrays.clone();
         arraysAdvance2 = arrays.clone();
 
@@ -64,6 +64,7 @@ public class InsertionSortExample {
      * 代码                                                  执行次数                         声明变量次数
      * compareTo                                              (n^2-n)/2
      * swap                                               最差：1.5n^2-1.5n  最优：0           最差：(n^2-n)/2  最优：0
+     *
      * 求时间复杂度：
      * 根据以上得出时间频度
      * 最优： T(n) =  0.5n^2-0.5n  得出时间复杂度为（找到最高次项，去掉最高次项系数得出：）O(n^2)
@@ -77,7 +78,7 @@ public class InsertionSortExample {
      *
      * @param comparableArray
      */
-    private static void insertionSort(Comparable[] comparableArray) {
+    public static void insertionSort(Comparable[] comparableArray) {
         for (int i = 1; i < comparableArray.length; i++) {
             for (int j = i; j > 0 ; j--) {
                 if(comparableArray[j].compareTo(comparableArray[j - 1]) == -1) {
@@ -106,7 +107,7 @@ public class InsertionSortExample {
      *
      * @param comparableArray
      */
-    private static void insertionSortAdvance1(Comparable[] comparableArray) {
+    public static void insertionSortAdvance1(Comparable[] comparableArray) {
         for (int i = 1; i < comparableArray.length; i++) {
             for (int j = i; j > 0 && comparableArray[j].compareTo(comparableArray[j - 1]) == -1; j--) {
                 SortUtil.swap(comparableArray, j, j - 1);
@@ -123,7 +124,8 @@ public class InsertionSortExample {
      *
      *
      * 代码                                                  执行次数                     声明变量次数
-     * indexComparable  = comparableArray[i];                              n
+     * indexComparable  = comparableArray[i];                  n
+     *  int j;                                                 n
      * compareTo                                       最好：n   最坏：(n^2-n)/2+n
      * comparableArray[j] = comparableArray[j - 1]    最好：0   最坏：(n^2-n)/2
      * comparableArray[j] = indexComparable;                  n
@@ -131,8 +133,9 @@ public class InsertionSortExample {
      *
      * 求时间复杂度：
      * 根据以上得出时间频度
-     * 最优： T(n) =  3n  得出时间复杂度为（找到最高次项，去掉最高次项系数得出：） O(n)
-     * 最差： T(n) = n^2+2n  得出时间复杂度为（找到最高次项，去掉最高次项系数得出：）  O(n^2)
+     * 最优： T(n) =  4n  得出时间复杂度为（找到最高次项，去掉最高次项系数得出：） O(n)
+     * 最差： T(n) = n^2+3n  得出时间复杂度为（找到最高次项，去掉最高次项系数得出：）  O(n^2)
+     * 平均 O(n^2)
      *
      * 由此得出上面测试的结论：
      * 在数组近乎是顺序的情况下 此时的时间复杂度为O(n)
@@ -148,7 +151,7 @@ public class InsertionSortExample {
      *
      * @param comparableArray
      */
-    private static void insertionSortAdvance2(Comparable[] comparableArray) {
+    public static void insertionSortAdvance2(Comparable[] comparableArray) {
         Comparable indexComparable;
         for (int i = 1; i < comparableArray.length; i++) {
             indexComparable  = comparableArray[i];

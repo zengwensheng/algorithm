@@ -26,27 +26,27 @@ public class SelectionSortExample {
 
     public static void main(String[] args) {
 
-        int number =10000;
+        int n =10000;
         int rangeL = 0;
         int rangeR = 1000;
         int swapTimes = 0;
 
-        Integer[] arrays = SortUtil.generateRandomArray(number,rangeL,rangeR);
+        Integer[] arrays = SortUtil.generateRandomArray(n,rangeL,rangeR);
 
         /**
          * 最差测试
          */
 
         SortUtil.calculateTime("Worst: selection sort",SelectionSortExample::selectionSort,arrays);
-       // SortUtil.printArray(arrays);
+        SortUtil.printArray(arrays);
 
         /**
          * 最优测试
          */
-        arrays = SortUtil.generateNearlyOrderedArray(number, swapTimes);
+        arrays = SortUtil.generateNearlyOrderedArray(n, swapTimes);
 
         SortUtil.calculateTime("Optimal: selection sort",SelectionSortExample::selectionSort,arrays);
-       // SortUtil.printArray(arrays);
+        SortUtil.printArray(arrays);
 
 
 
@@ -86,7 +86,7 @@ public class SelectionSortExample {
      *
      * @param comparableArray
      */
-    private static void selectionSort(Comparable[] comparableArray) {
+    public static void selectionSort(Comparable[] comparableArray) {
         int minIndex;
         for (int i = 0; i < comparableArray.length; i++) {
             minIndex = i;
