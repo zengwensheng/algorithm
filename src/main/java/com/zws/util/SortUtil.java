@@ -43,7 +43,7 @@ public interface SortUtil {
 
     /**
      * 生成一组近乎有序的数组
-     *
+     *   从小到大
      * @param n      数组大小
      * @param swapTimes 这个数越小数字 数组越有序
      * @return
@@ -52,7 +52,31 @@ public interface SortUtil {
 
         Integer[] integers = new Integer[n];
         for (int i = 0; i < n; i++) {
-                integers[i] = i;
+                integers[i] = i+1;
+        }
+
+        Random random = new Random();
+        for(int i =0;i<swapTimes;i++){
+            swap(integers, random.nextInt(n),random.nextInt(n));
+        }
+
+        return integers;
+
+    }
+
+
+    /**
+     * 生成一组近乎有序的数组
+     *   从大到小
+     * @param n      数组大小
+     * @param swapTimes 这个数越小数字 数组越有序
+     * @return
+     */
+    static Integer[] generateNearlyOrderedArrayFromBigToSmall(int n,int swapTimes) {
+
+        Integer[] integers = new Integer[n];
+        for (int i = n; i > 0; i--) {
+            integers[i-1] = i;
         }
 
         Random random = new Random();

@@ -19,10 +19,12 @@ public class ComparableSortExample {
         Integer [] selectionArray = SortUtil.generateRandomArray(n,rangeL,rangeR);
         Integer [] insertionArray = selectionArray.clone();
         Integer [] bubbleArray = selectionArray.clone();
+        Integer [] shellArray = selectionArray.clone();
 
         SortUtil.calculateTime("Worst: selection sort",SelectionSortExample::selectionSort,selectionArray);
         SortUtil.calculateTime("Worst: insertion advance2 sort", InsertionSortExample::insertionSortAdvance2, insertionArray);
         SortUtil.calculateTime("Worst: bubble advance2 sort",BubbleSortExample::bubbleSortAdvance2,bubbleArray);
+        SortUtil.calculateTime("Worst: shell sort", ShellSortExample::shellSort, shellArray);
 
 
         selectionArray = SortUtil.generateNearlyOrderedArray(n, swapTimes);
@@ -32,5 +34,13 @@ public class ComparableSortExample {
         SortUtil.calculateTime("Optimal: selection sort",SelectionSortExample::selectionSort,selectionArray);
         SortUtil.calculateTime("Optimal: insertion advance2 sort", InsertionSortExample::insertionSortAdvance2, insertionArray);
         SortUtil.calculateTime("Optimal: bubble advance2 sort",BubbleSortExample::bubbleSortAdvance2,bubbleArray);
+
+
+        selectionArray = SortUtil.generateNearlyOrderedArrayFromBigToSmall(n, swapTimes);
+        insertionArray = selectionArray.clone();
+        shellArray = selectionArray.clone();
+
+        SortUtil.calculateTime("from big to small: insertion advance2 sort", InsertionSortExample::insertionSortAdvance2, insertionArray);
+        SortUtil.calculateTime("from big to small: shell sort", ShellSortExample::shellSort, shellArray);
     }
 }
