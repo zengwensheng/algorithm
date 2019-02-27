@@ -9,7 +9,7 @@ import com.zws.util.SortUtil;
  *
  * 插入排序
  *   每步将一个待排序的数组，按其关键码值的大小插入前面已经排序的数组中适当位置上，直到全部插入完为止。
- *稳定性： 稳定，不会打乱数组中两个相等元素的顺序
+ * 稳定性： 稳定，不会打乱数组中两个相等元素的顺序
  *
  */
 public class InsertionSortExample {
