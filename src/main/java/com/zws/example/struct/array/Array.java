@@ -3,6 +3,19 @@ package com.zws.example.struct.array;
 import java.util.Arrays;
 
 /**
+ * 动态数组： 线性数据结构
+ *
+ * 什么是数组
+ *     同类数据元素的集合，在计算机中以连续的地址存储，编译时确定长度，无法改变。
+ *
+ * 什么是动态数组
+ *     数据结构中顺序表的物理实现，同类数据元素的集合，在计算机中以连续的地址存储，大小在创建时决定，但是可以改变。
+ *
+ * 为什么要使用动态数组
+ *       支持随机访问,查询速度快。但是插入和删除都需要移动元素，比起链表开销较大
+ *
+ * 数组最好应用于"索引有语意"的情况
+ *
  * @author zws
  * @email 2848392861@qq.com
  * date 2019/2/27
@@ -35,10 +48,7 @@ public class Array<E> {
     }
 
     /**
-     *
      * 时间复杂度： O(n/2) = O(n)
-     * @param index
-     * @param e
      */
     public void add(int index, E e) {
         if (index < 0 || index > size) {
@@ -58,7 +68,6 @@ public class Array<E> {
 
     /**
      * 时间复杂度：O(1)
-     * @param e
      */
 
     public void addLast(E e) {
@@ -67,7 +76,6 @@ public class Array<E> {
 
     /**
      * 时间复杂度:O(n)
-     * @param e
      */
     public void addFirst(E e) {
         add(0, e);
@@ -79,8 +87,6 @@ public class Array<E> {
 
     /**
      * 时间复杂度:O(1)
-     * @param index
-     * @return
      */
     public E get(int index) {
         if (index < 0 || index >= size)
@@ -90,8 +96,23 @@ public class Array<E> {
 
     /**
      * 时间复杂度:O(1)
-     * @param index
-     * @return
+     */
+    public E getFirst(){
+        return data[0];
+    }
+    /**
+     * 时间复杂度:O(1)
+     */
+    public E getLast()
+    {
+        return data[size-1];
+    }
+
+
+
+
+    /**
+     * 时间复杂度:O(1)
      */
     public void set(int index, E e) {
         if (index < 0 || index >= size)
@@ -112,8 +133,6 @@ public class Array<E> {
 
     /**
      * 时间复杂度：O(n)
-     * @param e
-     * @return
      */
     public int find(E e) {
         for (int i = 0; i < size; i++) {
@@ -126,15 +145,12 @@ public class Array<E> {
 
     /**
      * 时间复杂度：O(n/2) = O(n)
-     *
-     * @param index
-     * @return
      */
     public E remove(int index) {
         if (index < 0 || index >= size)
             throw new IllegalArgumentException("Remove failed. Index is illegal.");
         E ret = data[index];
-        for (int i = index; i < size; i++) {
+        for (int i = index; i < size-1; i++) {
             data[i] = data[i + 1];
         }
         size--;
@@ -152,8 +168,6 @@ public class Array<E> {
 
     /**
      * 时间复杂度：O(n)
-     *
-     * @return
      */
     public E removeFirst() {
         return remove(0);
@@ -161,7 +175,6 @@ public class Array<E> {
 
     /**
      * 时间复杂度：O(1)
-     * @return
      */
     public E removeLast() {
         return remove(size - 1);
