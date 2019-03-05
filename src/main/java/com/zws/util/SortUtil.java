@@ -136,24 +136,7 @@ public interface SortUtil {
         return true;
     }
 
-    /**
-     * 计算
-     *
-     * @param sortName
-     * @param consumer
-     * @param comparableArray
-     */
-    static void calculateTime(String sortName, Consumer<Comparable[]> consumer, Comparable[] comparableArray) {
 
-        Instant startInstant = Instant.now();
-        consumer.accept(comparableArray);
-        Instant endInstant = Instant.now();
-        if (!isSorted(comparableArray)) {
-            System.out.println("排序不正确");
-            return;
-        }
-        System.out.println(sortName + ": " + Duration.between(startInstant, endInstant).toMillis() + "ms");
-    }
 
     /**
      * 数组中位置交换

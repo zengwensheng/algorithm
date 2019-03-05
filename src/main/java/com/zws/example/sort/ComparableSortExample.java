@@ -1,5 +1,6 @@
 package com.zws.example.sort;
 
+import com.zws.util.CalculateTimeUtil;
 import com.zws.util.SortUtil;
 
 /**
@@ -21,10 +22,10 @@ public class ComparableSortExample {
         Integer [] bubbleArray = selectionArray.clone();
         Integer [] shellArray = selectionArray.clone();
 
-        SortUtil.calculateTime("Worst: selection sort",SelectionSortExample::selectionSort,selectionArray);
-        SortUtil.calculateTime("Worst: insertion advance2 sort", InsertionSortExample::insertionSortAdvance2, insertionArray);
-        SortUtil.calculateTime("Worst: bubble advance2 sort",BubbleSortExample::bubbleSortAdvance2,bubbleArray);
-        SortUtil.calculateTime("Worst: shell sort", ShellSortExample::shellSort, shellArray);
+        CalculateTimeUtil.calculateTime("Worst: selection sort",SelectionSortExample::selectionSort,selectionArray);
+        CalculateTimeUtil.calculateTime("Worst: insertion advance2 sort", InsertionSortExample::insertionSortAdvance2, insertionArray);
+        CalculateTimeUtil.calculateTime("Worst: bubble advance2 sort",BubbleSortExample::bubbleSortAdvance2,bubbleArray);
+        CalculateTimeUtil.calculateTime("Worst: shell sort", ShellSortExample::shellSort, shellArray);
 
 
         selectionArray = SortUtil.generateNearlyOrderedArray(n, swapTimes);
@@ -32,10 +33,10 @@ public class ComparableSortExample {
         bubbleArray = selectionArray.clone();
         shellArray = selectionArray.clone();
 
-        SortUtil.calculateTime("Optimal: selection sort",SelectionSortExample::selectionSort,selectionArray);
-        SortUtil.calculateTime("Optimal: insertion advance2 sort", InsertionSortExample::insertionSortAdvance2, insertionArray);
-        SortUtil.calculateTime("Optimal: bubble advance2 sort",BubbleSortExample::bubbleSortAdvance2,bubbleArray);
-        SortUtil.calculateTime("Optimal: shell sort",ShellSortExample::shellSort,shellArray);
+        CalculateTimeUtil.calculateTime("Optimal: selection sort",SelectionSortExample::selectionSort,selectionArray);
+        CalculateTimeUtil.calculateTime("Optimal: insertion advance2 sort", InsertionSortExample::insertionSortAdvance2, insertionArray);
+        CalculateTimeUtil.calculateTime("Optimal: bubble advance2 sort",BubbleSortExample::bubbleSortAdvance2,bubbleArray);
+        CalculateTimeUtil.calculateTime("Optimal: shell sort",ShellSortExample::shellSort,shellArray);
 
 
 

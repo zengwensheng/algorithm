@@ -1,5 +1,6 @@
 package com.zws.example.sort;
 
+import com.zws.util.CalculateTimeUtil;
 import com.zws.util.SortUtil;
 
 /**
@@ -29,13 +30,13 @@ public class InsertionSortExample {
         /**
          * 最差测试
          */
-        SortUtil.calculateTime("Worst: insertion  sort", InsertionSortExample::insertionSort, arrays);
+        CalculateTimeUtil.calculateTime("Worst: insertion  sort", InsertionSortExample::insertionSort, arrays);
         //SortUtil.printArray(arrays);
 
-        SortUtil.calculateTime("Worst: insertion advance1 sort", InsertionSortExample::insertionSortAdvance1, arraysAdvance1);
+        CalculateTimeUtil.calculateTime("Worst: insertion advance1 sort", InsertionSortExample::insertionSortAdvance1, arraysAdvance1);
         //SortUtil.printArray(arrays);
 
-        SortUtil.calculateTime("Worst: insertion advance2 sort", InsertionSortExample::insertionSortAdvance2, arraysAdvance2);
+        CalculateTimeUtil.calculateTime("Worst: insertion advance2 sort", InsertionSortExample::insertionSortAdvance2, arraysAdvance2);
         //SortUtil.printArray(arrays);
 
 
@@ -46,13 +47,13 @@ public class InsertionSortExample {
         arraysAdvance1 = arrays.clone();
         arraysAdvance2 = arrays.clone();
 
-        SortUtil.calculateTime("Optimal: insertion  sort", InsertionSortExample::insertionSort, arrays);
+        CalculateTimeUtil.calculateTime("Optimal: insertion  sort", InsertionSortExample::insertionSort, arrays);
         //SortUtil.printArray(arrays);
 
-        SortUtil.calculateTime("Optimal: insertion advance1 sort", InsertionSortExample::insertionSortAdvance1, arraysAdvance1);
+        CalculateTimeUtil.calculateTime("Optimal: insertion advance1 sort", InsertionSortExample::insertionSortAdvance1, arraysAdvance1);
         //SortUtil.printArray(arrays);
 
-        SortUtil.calculateTime("Optimal: insertion advance2 sort", InsertionSortExample::insertionSortAdvance2, arraysAdvance2);
+        CalculateTimeUtil.calculateTime("Optimal: insertion advance2 sort", InsertionSortExample::insertionSortAdvance2, arraysAdvance2);
         //SortUtil.printArray(arrays);
 
     }

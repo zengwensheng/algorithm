@@ -1,14 +1,14 @@
 package com.zws.example.struct.queue;
 
 
-import com.zws.example.struct.array.Array;
-
 /**
  * 循环队列：
- * 为充分利用向量空间，克服"假溢出"现象的方法是：将向量空间想象为一个首尾相接的圆环，并称这种向量为循环向量。存储在其中的队列称为循环队列
+ *   为充分利用向量空间，克服"假溢出"现象的方法是：将向量空间想象为一个首尾相接的圆环，并称这种向量为循环向量。存储在其中的队列称为循环队列
  * <p>
  * 条件判断：
+ *
  * 队列是否为空：
+ *
  * 一  设置布尔值
  * 队列为空判断： front==tail & 布尔值为false
  * 队列为满判断： front==tail & 布尔值为true
@@ -57,7 +57,9 @@ public class LoopQueue<E> implements Queue<E> {
         return front == tail;
     }
 
-
+    /**
+     * 时间复杂度： 均摊 O(1)
+     */
     @Override
     public void enqueue(E e) {
         if ((tail + 1) % data.length == front) {
@@ -71,13 +73,19 @@ public class LoopQueue<E> implements Queue<E> {
 
     private void resize(int newCapacity) {
         E[] newData = (E[]) new Object[newCapacity+1];
-        for (int i = 0; i < getSize(); i++) {
+        int i =0;
+        for ( ;i < getSize(); i++) {
             newData[i] = data[(i+front)%data.length];
         }
-        data = newData;
 
+        data = newData;
+        front = 0;
+        tail = i;
     }
 
+    /**
+     * 时间复杂度： 均摊 O(1)
+     */
     @Override
     public E dequeue() {
         E res = data[front];
@@ -88,6 +96,9 @@ public class LoopQueue<E> implements Queue<E> {
         return res;
     }
 
+    /**
+     * 时间复杂度： O(1)
+     */
     @Override
     public E getFront() {
         return data[front];
@@ -97,7 +108,7 @@ public class LoopQueue<E> implements Queue<E> {
     public String toString(){
 
         StringBuilder res = new StringBuilder();
-        res.append(String.format("Queue: size = %d , capacity = %d\n", data, getCapacity()));
+        res.append(String.format("Queue: size = %d , capacity = %d\n", getSize(), getCapacity()));
         res.append("front [");
         for(int i = front ; i != tail ; i = (i + 1) % data.length){
             res.append(data[i]);

@@ -1,10 +1,11 @@
 package com.zws.example.struct.queue;
 
-import com.zws.example.struct.array.Array;
+import com.zws.example.struct.base.Array;
 
 /**
  *
- * 数组队列
+ * 数组队列:
+ *   底层依托动态数组 {@link Array}
  *
  * @author zws
  * @email 2848392861@qq.com

@@ -1,9 +1,10 @@
-package com.zws.example.struct.array;
+package com.zws.example.struct.base;
 
 import java.util.Arrays;
 
 /**
- * 动态数组： 线性数据结构
+ * 动态数组：
+ *    线性数据结构,底层依托静态数组，通过扩容（resize）解决固定容量问题
  *
  * 什么是数组
  *     同类数据元素的集合，在计算机中以连续的地址存储，编译时确定长度，无法改变。

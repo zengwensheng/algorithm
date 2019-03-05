@@ -1,5 +1,6 @@
 package com.zws.example.sort;
 
+import com.zws.util.CalculateTimeUtil;
 import com.zws.util.SortUtil;
 
 /**
@@ -37,7 +38,7 @@ public class SelectionSortExample {
          * 最差测试
          */
 
-        SortUtil.calculateTime("Worst: selection sort",SelectionSortExample::selectionSort,arrays);
+        CalculateTimeUtil.calculateTime("Worst: selection sort",SelectionSortExample::selectionSort,arrays);
         SortUtil.printArray(arrays);
 
         /**
@@ -45,7 +46,7 @@ public class SelectionSortExample {
          */
         arrays = SortUtil.generateNearlyOrderedArray(n, swapTimes);
 
-        SortUtil.calculateTime("Optimal: selection sort",SelectionSortExample::selectionSort,arrays);
+        CalculateTimeUtil.calculateTime("Optimal: selection sort",SelectionSortExample::selectionSort,arrays);
         SortUtil.printArray(arrays);
 
 

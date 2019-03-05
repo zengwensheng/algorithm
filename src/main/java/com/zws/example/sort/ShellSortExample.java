@@ -1,5 +1,6 @@
 package com.zws.example.sort;
 
+import com.zws.util.CalculateTimeUtil;
 import com.zws.util.SortUtil;
 
 /**
@@ -22,7 +23,7 @@ public class ShellSortExample {
         Integer[] arrays = SortUtil.generateRandomArray(n, rangeL, rangeR);
 
         SortUtil.printArray(arrays);
-        SortUtil.calculateTime("Worst: shell sort", ShellSortExample::shellSort, arrays);
+        CalculateTimeUtil.calculateTime("Worst: shell sort", ShellSortExample::shellSort, arrays);
         //  SortUtil.printArray(arrays);
 
     }

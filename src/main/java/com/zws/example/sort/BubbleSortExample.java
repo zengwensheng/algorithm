@@ -1,5 +1,6 @@
 package com.zws.example.sort;
 
+import com.zws.util.CalculateTimeUtil;
 import com.zws.util.SortUtil;
 
 /**
@@ -34,11 +35,11 @@ public class BubbleSortExample {
         /**
          * 最差测试
          */
-        SortUtil.calculateTime("Worst: bubble sort",BubbleSortExample::bubbleSort,arrays);
+        CalculateTimeUtil.calculateTime("Worst: bubble sort",BubbleSortExample::bubbleSort,arrays);
         SortUtil.printArray(arrays);
-        SortUtil.calculateTime("Worst: bubble advance1 sort",BubbleSortExample::bubbleSortAdvance1,arrays1);
+        CalculateTimeUtil.calculateTime("Worst: bubble advance1 sort",BubbleSortExample::bubbleSortAdvance1,arrays1);
         SortUtil.printArray(arrays1);
-        SortUtil.calculateTime("Worst: bubble advance2 sort",BubbleSortExample::bubbleSortAdvance2,arrays2);
+        CalculateTimeUtil.calculateTime("Worst: bubble advance2 sort",BubbleSortExample::bubbleSortAdvance2,arrays2);
         SortUtil.printArray(arrays2);
 
         arrays = SortUtil.generateNearlyOrderedArray(n,swapTimes);
@@ -49,11 +50,11 @@ public class BubbleSortExample {
         /**
          * 最优测试
          */
-        SortUtil.calculateTime("Optimal: bubble sort",BubbleSortExample::bubbleSort,arrays);
+        CalculateTimeUtil.calculateTime("Optimal: bubble sort",BubbleSortExample::bubbleSort,arrays);
         SortUtil.printArray(arrays);
-        SortUtil.calculateTime("Optimal: bubble advance1 sort",BubbleSortExample::bubbleSortAdvance1,arrays1);
+        CalculateTimeUtil.calculateTime("Optimal: bubble advance1 sort",BubbleSortExample::bubbleSortAdvance1,arrays1);
         SortUtil.printArray(arrays1);
-        SortUtil.calculateTime("Optimal: bubble advance2 sort",BubbleSortExample::bubbleSortAdvance2,arrays2);
+        CalculateTimeUtil.calculateTime("Optimal: bubble advance2 sort",BubbleSortExample::bubbleSortAdvance2,arrays2);
         SortUtil.printArray(arrays2);
 
 

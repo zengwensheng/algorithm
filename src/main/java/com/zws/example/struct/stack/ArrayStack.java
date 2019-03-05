@@ -1,6 +1,6 @@
 package com.zws.example.struct.stack;
 
-import com.zws.example.struct.array.Array;
+import com.zws.example.struct.base.Array;
 
 /**
  *
