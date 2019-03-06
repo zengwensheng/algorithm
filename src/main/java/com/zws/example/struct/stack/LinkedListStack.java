@@ -1,10 +1,13 @@
 package com.zws.example.struct.stack;
 
+import com.zws.example.struct.base.Array;
 import com.zws.example.struct.base.LinkedList;
 
 /**
  *
  * 用链表是实现栈
+ *
+ *  底层依托链表 {@link LinkedList}
  *
  * @author zws
  * @email 2848392861@qq.com

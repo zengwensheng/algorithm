@@ -6,6 +6,8 @@ import com.zws.example.struct.base.Array;
  *
  *  用数组实现栈
  *
+ *   底层依托动态数组 {@link Array}
+ *
  *
  * @author zws
  * @email 2848392861@qq.com

@@ -8,6 +8,16 @@ import java.util.Random;
  * @author zws
  * @email 2848392861@qq.com
  * date 2019/3/5
+ *
+ *
+ * 总结：
+ *    一：数组栈比链表栈出栈慢
+ *        但是数组入栈是如果长度不够会一次开出两陪的空间
+ *        而链表是每次入栈都会开辟空间，所以导致数组的入栈操作比链表快 n够大是整体的性能低于数组栈
+ *
+ *
+ *
+ *
  */
 public class Comparable {
 
