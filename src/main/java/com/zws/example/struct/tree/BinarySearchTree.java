@@ -1,21 +1,37 @@
 package com.zws.example.struct.tree;
 
 import com.zws.example.struct.base.Array;
+import com.zws.example.struct.queue.LinkedListQueue;
+import com.zws.example.struct.queue.Queue;
 import com.zws.example.struct.stack.ArrayStack;
 import com.zws.example.struct.stack.Stack;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Random;
+
 
 /**
- *
  * 特点:
- *    动态数据结构,是一颗二叉树
- *    二分搜索树的每个节点的值:
- *       每个节点的值都大于其左子树的所有节点的值
- *       每个节点的值都小于其右子树的所有节点的值
- *
+ * 动态数据结构,是一颗二叉树
+ * 二分搜索树的每个节点的值:
+ * 每个节点的值都大于其左子树的所有节点的值
+ * 每个节点的值都小于其右子树的所有节点的值
+ * 每一棵子树也是二分搜索树
+ * <p>
  * 缺点：
- *     动态数据
+ * 在一些情况下二叉树会退化成链表 （如从小到大依次插入)
+ * <p>
+ * <p>
+ * 遍历分类
+ * <p>
+ * 深度优先遍历 :
+ * <p>
+ * 前序遍历 : 对当前节点的遍历在对左右孩子节点的遍历之前, 遍历顺序 : 当前节点->左孩子->右孩子
+ * 中序遍历 : 对当前节点的遍历在对左右孩子节点的遍历中间, 遍历顺序 : 左孩子->当前节点->右孩子
+ * 后序遍历 : 对当前节点的遍历在对左右孩子节点的遍历之后, 遍历顺序 : 左孩子->右孩子->当前节点
+ * 广度优先遍历 :
+ * <p>
+ * 层序遍历 : 按层从左到右进行遍历
  *
  * @author zws
  * @email 2848392861@qq.com
@@ -54,6 +70,10 @@ public class BinarySearchTree<E extends Comparable<E>> {
         return size == 0;
     }
 
+    /**
+     * 在这个树是平衡的情况下
+     * 时间复杂度：O(h) = O(logn)
+     */
     public void add(E e) {
         //root = add(root, e);
         Node cur = root;
@@ -78,6 +98,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
                 cur = cur.right;
             }
         }
+        size++;
 
 
     }
@@ -95,6 +116,10 @@ public class BinarySearchTree<E extends Comparable<E>> {
         return node;
     }
 
+    /**
+     * 在这个树是平衡的情况下
+     * 时间复杂度：O(h) = O(logn)
+     */
     public Boolean contains(E e) {
         Node cur = root;
         while (cur != null) {
@@ -130,7 +155,9 @@ public class BinarySearchTree<E extends Comparable<E>> {
         }
     }
 
-
+    /**
+     * 前序遍历
+     */
     public void preOrder() {
         if (root == null) {
             return;
@@ -162,7 +189,9 @@ public class BinarySearchTree<E extends Comparable<E>> {
 
     }
 
-
+    /**
+     * 中序遍历
+     */
     public void inOrder() {
         if (root == null) {
             return;
@@ -204,6 +233,9 @@ public class BinarySearchTree<E extends Comparable<E>> {
 
     }
 
+    /**
+     * 后序遍历
+     */
     public void postOrder() {
         if (root == null) {
             return;
@@ -232,7 +264,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
                 nodeStack.push(cur.right);
             }
 
-            if(cur.left != null){
+            if (cur.left != null) {
                 nodeStack.push(cur.left);
             }
 
@@ -253,6 +285,108 @@ public class BinarySearchTree<E extends Comparable<E>> {
         System.out.println(node.e);
     }
 
+    /**
+     * 层序遍历
+     */
+    public void levelOrder() {
+        if (root == null) {
+            return;
+        }
+        Queue<Node> nodeQueue = new LinkedListQueue<>();
+        nodeQueue.enqueue(root);
+        while (!nodeQueue.isEmpty()) {
+            Node cur = nodeQueue.dequeue();
+            System.out.println(cur.e);
+            if (cur.left != null) {
+                nodeQueue.enqueue(cur.left);
+            }
+            if (cur.right != null) {
+                nodeQueue.enqueue(cur.right);
+            }
+
+        }
+
+    }
+
+
+    // 从二分搜索树中删除最小值所在节点, 返回最小值
+    public E removeMin() {
+        Node ret = minimum(root);
+        removeMin(root);
+        return ret.e;
+
+    }
+
+    // 删除掉以node为根的二分搜索树中的最小节点
+    // 返回删除节点后新的二分搜索树的根
+    private Node removeMin(Node node) {
+        if (node.left == null) {
+            Node right = node.right;
+            node.right = null;
+            size--;
+            return right;
+        }
+        node.left = removeMin(node.left);
+        return node;
+
+    }
+
+    // 返回以node为根的二分搜索树的最小值所在的节点
+    private Node minimum(Node e) {
+        while (e.left != null) {
+            e = e.left;
+        }
+        return e;
+    }
+
+
+    // 从二分搜索树中删除最大值所在节点
+    public E removeMax() {
+        Node del = maximum(root);
+        root = removeMax(root);
+        return del.e;
+    }
+
+    // 删除掉以node为根的二分搜索树中的最大节点
+    // 返回删除节点后新的二分搜索树的根
+    private Node removeMax(Node node) {
+        if (node.right == null) {
+            Node left = node.left;
+            node.left = null;
+            size--;
+            return left;
+        }
+        node.right = removeMax(node.right);
+        return node;
+    }
+
+    // 返回以node为根的二分搜索树的最大值所在的节点
+    private Node maximum(Node node) {
+        while (node.right != null) {
+            node = node.right;
+        }
+        return node;
+    }
+
+
+    public void remove(E e) {
+        root = remove(e, root);
+    }
+
+
+    private Node remove(E e, Node node) {
+        if (node.e.equals(e)) {
+
+
+        }else if (node.e.compareTo(e) == 1) {
+            node.left = remove(e, node.left);
+        } else {
+            node.right = remove(e, node.right);
+        }
+
+        return node;
+    }
+
 
     @Override
     public String toString() {
@@ -261,7 +395,6 @@ public class BinarySearchTree<E extends Comparable<E>> {
         return res.toString();
 
     }
-
 
     // 生成以node为根节点，深度为depth的描述二叉树的字符串
     private void generateString(Node node, int depth, StringBuilder res) {
@@ -284,9 +417,14 @@ public class BinarySearchTree<E extends Comparable<E>> {
     }
 
 
+    private String compareTo(Node n,Node n1){
+
+    }
+
+
     public static void main(String[] args) {
 
-        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+       /* BinarySearchTree<Integer> bst = new BinarySearchTree<>();
         int[] nums = {5, 3, 8, 6, 4, 2};
         for (int num : nums)
             bst.add(num);
@@ -306,6 +444,43 @@ public class BinarySearchTree<E extends Comparable<E>> {
 
         bst.postOrder();
         System.out.println();
+
+        bst.levelOrder();
+        System.out.println();*/
+
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        Random random = new Random();
+
+        int n = 1000;
+
+        // test removeMin
+        for (int i = 0; i < n; i++)
+            bst.add(random.nextInt(10000));
+
+        ArrayList<Integer> nums = new ArrayList<>();
+        while (!bst.isEmpty())
+            nums.add(bst.removeMin());
+
+        System.out.println(nums);
+        for (int i = 1; i < nums.size(); i++)
+            if (nums.get(i - 1) > nums.get(i))
+                throw new IllegalArgumentException("Error!");
+        System.out.println("removeMin test completed.");
+
+
+        // test removeMax
+        for (int i = 0; i < n; i++)
+            bst.add(random.nextInt(10000));
+
+        nums = new ArrayList<>();
+        while (!bst.isEmpty())
+            nums.add(bst.removeMax());
+
+        System.out.println(nums);
+        for (int i = 1; i < nums.size(); i++)
+            if (nums.get(i - 1) < nums.get(i))
+                throw new IllegalArgumentException("Error!");
+        System.out.println("removeMax test completed.");
 
 
     }
