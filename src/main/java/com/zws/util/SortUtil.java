@@ -52,7 +52,7 @@ public interface SortUtil {
 
         Integer[] integers = new Integer[n];
         for (int i = 0; i < n; i++) {
-                integers[i] = i+1;
+                integers[i] = i;
         }
 
         Random random = new Random();

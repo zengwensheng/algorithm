@@ -5,6 +5,7 @@ import com.zws.example.struct.queue.LinkedListQueue;
 import com.zws.example.struct.queue.Queue;
 import com.zws.example.struct.stack.ArrayStack;
 import com.zws.example.struct.stack.Stack;
+import com.zws.util.SortUtil;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -32,6 +33,9 @@ import java.util.Random;
  * 广度优先遍历 :
  * <p>
  * 层序遍历 : 按层从左到右进行遍历
+ * <p>
+ * <p>
+ * 如果该二分搜索树中需要存在重复元素，请将相等的两个元素的comparable的比较的值改为不等于0就行了
  *
  * @author zws
  * @email 2848392861@qq.com
@@ -80,37 +84,42 @@ public class BinarySearchTree<E extends Comparable<E>> {
         while (true) {
             if (cur == null) {
                 root = new Node(e);
+                size++;
                 break;
             }
 
-            if (cur.e.compareTo(e) == 1) {
+            if (cur.e.compareTo(e) > 0) {
                 if (cur.left == null) {
                     cur.left = new Node(e);
+                    size++;
                     break;
                 }
                 cur = cur.left;
 
-            } else {
+            } else if (cur.e.compareTo(e) < 0) {
                 if (cur.right == null) {
                     cur.right = new Node(e);
+                    size++;
                     break;
                 }
                 cur = cur.right;
+            } else {
+                break;
             }
         }
-        size++;
 
 
     }
 
+    // 递归添加元素
     private Node add(Node node, E e) {
         if (node == null) {
             size++;
             return new Node(e);
         }
-        if (node.e.compareTo(e) == 1) {
+        if (node.e.compareTo(e) > 0) {
             node.left = add(node.left, e);
-        } else {
+        } else if (node.e.compareTo(e) < 0) {
             node.right = add(node.right, e);
         }
         return node;
@@ -128,9 +137,9 @@ public class BinarySearchTree<E extends Comparable<E>> {
                 return true;
             }
 
-            if (cur.e.compareTo(e) == 1) {
+            if (cur.e.compareTo(e) > 0) {
                 cur = cur.left;
-            } else {
+            } else if (cur.e.compareTo(e) < 0) {
                 cur = cur.right;
             }
         }
@@ -140,19 +149,23 @@ public class BinarySearchTree<E extends Comparable<E>> {
         //return contains(root, e);
     }
 
+    // 递归查询元素
     private Boolean contains(Node node, E e) {
 
         if (node == null) {
             return false;
         }
+
         if (node.e.equals(e)) {
             return true;
         }
-        if (node.e.compareTo(e) == 1) {
-            return contains(node.right, e);
-        } else {
+
+        if (node.e.compareTo(e) > 0) {
             return contains(node.left, e);
+        } else if (node.e.compareTo(e) < 0) {
+            return contains(node.right, e);
         }
+        return false;
     }
 
     /**
@@ -179,6 +192,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
         //preOrder(root);
     }
 
+    // 递归前序遍历
     private void preOrder(Node node) {
         if (node == null) {
             return;
@@ -222,7 +236,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
 
         // inOrder(root);
     }
-
+    //递归中序遍历
     private void inOrder(Node node) {
         if (node == null) {
             return;
@@ -275,7 +289,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
 
         /*postOrder(root);*/
     }
-
+    // 递归后序遍历
     private void postOrder(Node node) {
         if (node == null) {
             return;
@@ -368,19 +382,44 @@ public class BinarySearchTree<E extends Comparable<E>> {
         return node;
     }
 
-
+    //从二分搜索树中删除元素为e的节点
     public void remove(E e) {
         root = remove(e, root);
     }
 
-
+    // 删除掉以node节点为根的二分搜索树中值为e的节点
+    // 返回删除节点后新的二分搜索树的根
     private Node remove(E e, Node node) {
+        if (node == null) {
+            return node;
+        }
         if (node.e.equals(e)) {
 
+            //待删除元素左子树为空的情况下
+            if (node.left == null) {
+                Node right = node.right;
+                node.right = null;
+                size--;
+                return right;
+            }
+            //待删除元素右子树为空的情况下
+            if (node.right == null) {
+                Node left = node.left;
+                node.left = null;
+                size--;
+                return left;
+            }
 
-        }else if (node.e.compareTo(e) == 1) {
+            //待删除元素左，右子树都不为空的情况下，找到右子树中最小元素或左子树最大元素代替当前元素
+            Node successor = minimum(node.right);
+            successor.right = remove(successor.e, node.right);
+            successor.left = node.left;
+            return successor;
+        }
+
+        if (node.e.compareTo(e) > 0) {
             node.left = remove(e, node.left);
-        } else {
+        } else if (node.e.compareTo(e) < 0) {
             node.right = remove(e, node.right);
         }
 
@@ -417,11 +456,6 @@ public class BinarySearchTree<E extends Comparable<E>> {
     }
 
 
-    private String compareTo(Node n,Node n1){
-
-    }
-
-
     public static void main(String[] args) {
 
        /* BinarySearchTree<Integer> bst = new BinarySearchTree<>();
@@ -448,7 +482,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
         bst.levelOrder();
         System.out.println();*/
 
-        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+       /* BinarySearchTree<Integer> bst = new BinarySearchTree<>();
         Random random = new Random();
 
         int n = 1000;
@@ -480,7 +514,26 @@ public class BinarySearchTree<E extends Comparable<E>> {
         for (int i = 1; i < nums.size(); i++)
             if (nums.get(i - 1) < nums.get(i))
                 throw new IllegalArgumentException("Error!");
-        System.out.println("removeMax test completed.");
+        System.out.println("removeMax test completed.");*/
+
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        Random random = new Random();
+
+        int n = 1000;
+
+        for (int i = 0; i < n; i++) {
+            bst.add(random.nextInt(n));
+        }
+
+        Integer[] order = SortUtil.generateNearlyOrderedArray(n, n);
+
+        for (int i = 0; i < n; i++) {
+            if(bst.contains(order[i])){
+                bst.remove(order[i]);
+            }
+        }
+
+        System.out.println(bst.size());
 
 
     }
