@@ -1,67 +1,78 @@
 package com.zws.example.struct.set;
 
-import com.zws.example.struct.tree.BinarySearchTree;
+import com.zws.example.struct.base.LinkedList;
 import com.zws.util.FileUtil;
+
 import java.util.ArrayList;
 
 /**
  *
  * 集合一种实现(有序集合)：
- *   二分搜索树不能添加重复元素，是非常好的实现“集合”的底层数据结构
+ *     使用链表实现集合
  *
  * @author zws
  * @email 2848392861@qq.com
- * date 2019/3/12
+ * date 2019/3/25
  */
-public class BSTSet<E extends java.lang.Comparable<E>> implements Set<E> {
+public class LinkedListSet<E> implements Set<E> {
 
-    private BinarySearchTree<E> bst;
 
-    public BSTSet(){
-        bst = new BinarySearchTree();
+    private LinkedList<E> linkedList;
+
+
+    public LinkedListSet() {
+        linkedList = new LinkedList();
     }
 
+
     /**
-     * 在二分搜索树平衡情况下
-     * 时间复杂度为： O（logn）
+     * 添加 时间复杂度: O(n)
+     * @param e
      */
     @Override
     public void add(E e) {
-        bst.add(e);
+        if(!linkedList.contains(e)) {
+            linkedList.addFirst(e);
+        }
+
     }
+
     /**
-     * 在二分搜索树平衡情况下
-     * 时间复杂度为： O（logn）
+     * 是否存在  时间复杂度：O(n)
+     * @param e
+     * @return
      */
     @Override
     public boolean contains(E e) {
-        return bst.contains(e);
+        return linkedList.contains(e);
     }
+
     /**
-     * 在二分搜索树平衡情况下
-     * 时间复杂度为： O（logn）
+     * 删除 时间复杂度： O(n)
+     * @param e
      */
     @Override
     public void remove(E e) {
-         bst.remove(e);
+        linkedList.removeElement(e);
     }
 
     @Override
     public int getSize() {
-        return bst.size();
+        return linkedList.getSize();
     }
 
     @Override
     public boolean isEmpty() {
-        return bst.isEmpty();
+        return linkedList.isEmpty();
     }
+
 
     public static void main(String[] args) {
         System.out.println("Pride and Prejudice");
         ArrayList<String> words1 = new ArrayList<>();
         if(FileUtil.readFile("/Users/zws/IdeaProjects/algorithm/src/main/resources/pride-and-prejudice.txt",words1)){
             System.out.println("Total words:"+words1.size());
-            BSTSet<String> set1 = new BSTSet();
+            LinkedListSet<String> set1 = new LinkedListSet<>();
             for(String word:words1){
                 set1.add(word);
             }
@@ -74,7 +85,7 @@ public class BSTSet<E extends java.lang.Comparable<E>> implements Set<E> {
         words1 = new ArrayList<>();
         if(FileUtil.readFile("/Users/zws/IdeaProjects/algorithm/src/main/resources/a-tale-of-two-cities.txt",words1)){
             System.out.println("Total words:"+words1.size());
-            BSTSet<String> set1 = new BSTSet();
+            LinkedListSet<String> set1 = new LinkedListSet<>();
             for (String words:words1){
                 set1.add(words);
             }

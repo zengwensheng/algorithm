@@ -104,6 +104,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
                 }
                 cur = cur.right;
             } else {
+                cur.e = e;
                 break;
             }
         }

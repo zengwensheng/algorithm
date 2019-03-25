@@ -36,7 +36,7 @@ public class FileUtil {
 
         try (
                 FileInputStream fis = new FileInputStream(file);
-                Scanner scanner = new Scanner(new BufferedInputStream(fis), "utf-2")
+                Scanner scanner = new Scanner(new BufferedInputStream(fis), "utf-8")
         ) {
             //简单分词
             if (scanner.hasNextLine()) {

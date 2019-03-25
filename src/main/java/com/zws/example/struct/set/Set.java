@@ -7,6 +7,10 @@ package com.zws.example.struct.set;
  *   典型应用：
  *      客户统计
  *      字汇量统计
+ *
+ *   有序集合：集合中的元素具有顺序性
+ *   无序集合：集合中的元素没有顺序性
+ *   多重集合：集合中的元素可以重复
  * @param <E>
  */
 public interface Set<E> {
