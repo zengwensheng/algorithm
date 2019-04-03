@@ -2,6 +2,9 @@ package com.zws.example.struct.map;
 
 
 import com.zws.example.struct.base.LinkedList;
+import com.zws.util.FileUtil;
+
+import java.util.ArrayList;
 
 /**
  * @author zws
@@ -51,7 +54,7 @@ public class LinkedListMap<K, V> implements Map<K, V> {
         }
 
         Node previous = dummyHead;
-        while (previous.next == null) {
+        while (previous.next != null) {
             if (previous.next.key.equals(key)) {
                 previous.next.value = value;
                 return;
@@ -65,7 +68,7 @@ public class LinkedListMap<K, V> implements Map<K, V> {
     @Override
     public V remove(K key) {
         Node previous = dummyHead;
-        while (previous.next == null) {
+        while (previous.next != null) {
             if (previous.next.key.equals(key)) {
                 Node del = previous.next;
                 previous.next = del.next;
@@ -82,7 +85,7 @@ public class LinkedListMap<K, V> implements Map<K, V> {
     public boolean contains(K key) {
 
         Node cur = dummyHead.next;
-        while (cur == null) {
+        while (cur != null) {
             if (cur.key.equals(key)) {
                 return true;
             }
@@ -95,7 +98,7 @@ public class LinkedListMap<K, V> implements Map<K, V> {
     public V get(K key) {
 
         Node cur = dummyHead.next;
-        while (cur == null) {
+        while (cur != null) {
             if (cur.key.equals(key)) {
                 return cur.value;
             }
@@ -112,5 +115,25 @@ public class LinkedListMap<K, V> implements Map<K, V> {
     @Override
     public boolean isEmpty() {
         return size == 0;
+    }
+
+    public static void main(String[] args) throws Exception {
+        System.out.println("Pride and Prejudice");
+        ArrayList<String> words = new ArrayList<>();
+        if (FileUtil.readFile(LinkedListMap.class.getResource("/").getFile() + "pride-and-prejudice.txt", words)) {
+            System.out.println("Total words: " + words.size());
+            LinkedListMap<String, Integer> map = new LinkedListMap<>();
+            for (String word : words) {
+                  if(map.contains(word)){
+                      map.put(word,map.get(word)+1);
+                  }else{
+                      map.put(word,1);
+                  }
+            }
+            System.out.println("Total different words:"+map.getSize());
+            System.out.println("Frequency of PRIDE:"+map.get("prejudice"));
+            System.out.println("Frequency of PREJUDICE:"+map.get("prejudice"));
+        }
+        System.out.println();
     }
 }
