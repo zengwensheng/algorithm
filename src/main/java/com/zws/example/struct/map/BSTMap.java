@@ -1,21 +1,24 @@
 package com.zws.example.struct.map;
 
+import com.zws.example.struct.base.Array;
 import com.zws.util.FileUtil;
 
-import java.util.ArrayList;
 
 /**
  * @author zws
  * @email 2848392861@qq.com
  * date 2019/3/25
+ *
+ * 基于二分搜索树完成的映射，有序映射
+ *
  */
-public class TreeMap<K extends Comparable<K>, V> implements Map<K, V> {
+public class BSTMap<K extends java.lang.Comparable<K>, V> implements Map<K, V> {
 
 
     private Node root;
     private Integer size=0;
 
-    public TreeMap(){
+    public BSTMap(){
 
     }
 
@@ -175,10 +178,10 @@ public class TreeMap<K extends Comparable<K>, V> implements Map<K, V> {
 
     public static void main(String[] args) throws Exception {
         System.out.println("Pride and Prejudice");
-        ArrayList<String> words = new ArrayList<>();
+        Array<String> words = new Array<>();
         if (FileUtil.readFile(LinkedListMap.class.getResource("/").getFile() + "pride-and-prejudice.txt", words)) {
-            System.out.println("Total words: " + words.size());
-            TreeMap<String, Integer> map = new TreeMap<>();
+            System.out.println("Total words: " + words.getSize());
+            BSTMap<String, Integer> map = new BSTMap<>();
             for (String word : words) {
                 if(map.contains(word)){
                     map.put(word,map.get(word)+1);

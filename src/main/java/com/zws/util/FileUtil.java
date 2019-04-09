@@ -1,5 +1,7 @@
 package com.zws.util;
 
+import com.zws.example.struct.base.Array;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,7 +25,7 @@ public class FileUtil {
      * @param words
      * @return
      */
-    public static boolean readFile(String filename, ArrayList<String> words) {
+    public static boolean readFile(String filename, Array<String> words) {
         if (filename == null || words == null) {
             System.out.println("filename is null or words is null");
             return false;
@@ -45,7 +47,7 @@ public class FileUtil {
                 for(int i = start+1;i<=contents.length();){
                     if(i== contents.length()||!Character.isLetter(contents.charAt(i))){
                         String word = contents.substring(start,i).toLowerCase();
-                        words.add(word);
+                        words.addLast(word);
                         start = firstCharacterIndex(contents,i);
                         i = start +1;
                     }else{

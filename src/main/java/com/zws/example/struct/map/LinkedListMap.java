@@ -1,7 +1,7 @@
 package com.zws.example.struct.map;
 
 
-import com.zws.example.struct.base.LinkedList;
+import com.zws.example.struct.base.Array;
 import com.zws.util.FileUtil;
 
 import java.util.ArrayList;
@@ -10,6 +10,10 @@ import java.util.ArrayList;
  * @author zws
  * @email 2848392861@qq.com
  * date 2019/3/25
+ *
+ * 基于链表完成的映射，有序映射
+ *
+ * 算法复杂度 {@link Comparable}
  */
 public class LinkedListMap<K, V> implements Map<K, V> {
 
@@ -119,9 +123,9 @@ public class LinkedListMap<K, V> implements Map<K, V> {
 
     public static void main(String[] args) throws Exception {
         System.out.println("Pride and Prejudice");
-        ArrayList<String> words = new ArrayList<>();
+        Array<String> words = new Array<>();
         if (FileUtil.readFile(LinkedListMap.class.getResource("/").getFile() + "pride-and-prejudice.txt", words)) {
-            System.out.println("Total words: " + words.size());
+            System.out.println("Total words: " + words.getSize());
             LinkedListMap<String, Integer> map = new LinkedListMap<>();
             for (String word : words) {
                   if(map.contains(word)){

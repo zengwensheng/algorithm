@@ -1,5 +1,6 @@
 package com.zws.example.struct.set;
 
+import com.zws.example.struct.base.Array;
 import com.zws.util.FileUtil;
 
 import javax.print.DocFlavor;
@@ -23,10 +24,10 @@ public class Comparable {
         Instant start = Instant.now();
         System.out.println(filename);
 
-        ArrayList<String> words = new ArrayList<>();
+        Array<String> words = new Array<>();
         if (FileUtil.readFile(filename, words)) {
 
-            System.out.println("Total words:" + words.size());
+            System.out.println("Total words:" + words.getSize());
             for (String word : words) {
                 set.add(word);
             }
