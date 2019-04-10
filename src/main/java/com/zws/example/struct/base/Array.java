@@ -40,6 +40,11 @@ public class Array<E> implements  Iterable<E> {
         this(10);
     }
 
+    public Array(E[] arr){
+        data = arr;
+        size = arr.length;
+    }
+
     public int getCapacity() {
         return data.length;
     }
@@ -113,9 +118,6 @@ public class Array<E> implements  Iterable<E> {
     {
         return data[size-1];
     }
-
-
-
 
     /**
      * 时间复杂度:O(1)
@@ -194,25 +196,14 @@ public class Array<E> implements  Iterable<E> {
         }
     }
 
-    @Override
-    public String toString() {
-        StringBuilder res = new StringBuilder();
-        res.append(String.format("Array: size = %d , capacity = %d\n", size, data.length));
-        res.append('[');
-        for (int i = 0; i < size; i++) {
-            res.append(data[i]);
-            if (i != size - 1)
-                res.append(", ");
-        }
-        res.append(']');
-        return res.toString();
-
+    public void swap(int i,int j){
+        E temp = data[i];
+        data[i] = data[j];
+        data[j] = temp;
     }
-
 
     @Override
     public Iterator<E> iterator() {
-
         return new Itr();
     }
 
@@ -246,10 +237,10 @@ public class Array<E> implements  Iterable<E> {
 
         @Override
         public void remove() {
-             if(lastRet<0){
-                 throw  new IllegalArgumentException();
-             }
-             checkForComodification();
+            if(lastRet<0){
+                throw  new IllegalArgumentException();
+            }
+            checkForComodification();
             try {
                 Array.this.remove(lastRet);
                 if (lastRet < cursor)
@@ -273,6 +264,20 @@ public class Array<E> implements  Iterable<E> {
     }
 
 
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder();
+        res.append(String.format("Array: size = %d , capacity = %d\n", size, data.length));
+        res.append('[');
+        for (int i = 0; i < size; i++) {
+            res.append(data[i]);
+            if (i != size - 1)
+                res.append(", ");
+        }
+        res.append(']');
+        return res.toString();
+
+    }
 
     public static void main(String[] args) {
 
