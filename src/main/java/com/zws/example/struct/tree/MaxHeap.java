@@ -2,6 +2,8 @@ package com.zws.example.struct.tree;
 
 import com.zws.example.struct.base.Array;
 
+import java.util.Random;
+
 /**
  * @author zws
  * @email 2848392861@qq.com
@@ -39,10 +41,14 @@ public class MaxHeap<E extends Comparable> {
         data = new Array<>();
     }
 
-
+    /**
+     * 时间复杂度：
+     *
+     * @param arr
+     */
     public MaxHeap(E[] arr) {
         data = new Array<>(arr);
-        for(int i=parent(data.getSize());i>=0;i--){
+        for (int i = parent(data.getSize()); i >= 0; i--) {
             siftDown(i);
         }
     }
@@ -69,11 +75,15 @@ public class MaxHeap<E extends Comparable> {
 
     public void add(E e) {
         data.addLast(e);
-        siftUp(data.getSize());
+        siftUp(data.getSize() - 1);
     }
 
     private void siftUp(int index) {
+        if (index == 0) {
+            return;
+        }
         int parent = parent(index);
+
         if (data.get(index).compareTo(data.get(parent)) == 1) {
             data.swap(index, parent);
             siftUp(parent);
@@ -85,31 +95,54 @@ public class MaxHeap<E extends Comparable> {
     }
 
     public E extractMax() {
-        E ret = data.removeFirst();
+        data.swap(0,data.getSize()-1);
+        E ret = data.removeLast();
         siftDown(0);
         return ret;
     }
 
     private void siftDown(int index) {
+
         int leftIndex = leftChild(index);
         int rightIndex = rightChild(index);
-        int childIndex = data.get(leftIndex).compareTo(data.get(rightIndex)) == 1 ? leftIndex  : rightIndex;
-        if(data.get(index).compareTo(data.get(childIndex))==-1){
-            data.swap(index,childIndex);
+
+        if (leftIndex >= data.getSize() || rightIndex >= data.getSize()) {
+            return;
+        }
+
+        int childIndex = data.get(leftIndex).compareTo(data.get(rightIndex)) == 1 ? leftIndex : rightIndex;
+        if (data.get(index).compareTo(data.get(childIndex)) == -1) {
+            data.swap(index, childIndex);
             siftUp(childIndex);
         }
     }
 
-    public E replace(int index,E e) {
-        E ret =  data.get(index);
-        data.set(index,e);
+    public E replace(int index, E e) {
+        E ret = data.get(index);
+        data.set(index, e);
         siftUp(index);
         siftDown(index);
         return ret;
     }
 
     public static void main(String[] args) {
+        int n = 10;
+        MaxHeap<Integer> maxHeap = new MaxHeap<>();
+        Random random = new Random();
+        for (int i = 0; i < n; i++) {
+            maxHeap.add(random.nextInt(100));
+        }
 
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = maxHeap.extractMax();
+        }
+        for (int i = 1; i < n; i++) {
+            if (arr[i - 1] < arr[i]) {
+                throw new IllegalArgumentException();
+            }
+        }
+        System.out.println("Test MaxHeap completed.");
     }
 
 

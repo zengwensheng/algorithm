@@ -6,8 +6,6 @@ import com.zws.example.struct.queue.Queue;
 import com.zws.example.struct.stack.ArrayStack;
 import com.zws.example.struct.stack.Stack;
 import com.zws.util.SortUtil;
-
-import java.util.ArrayList;
 import java.util.Random;
 
 
