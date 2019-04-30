@@ -61,24 +61,49 @@ public class MaxHeap<E extends Comparable> {
         return data.isEmpty();
     }
 
+    /**
+     * 返回完全二叉树的数组表示中，一个索引所表示的元素的父亲节点的索引
+     *
+     * @param index
+     * @return
+     */
     private int parent(int index) {
         return (index - 1) / 2;
     }
 
+    /**
+     * 返回完全二叉树的数组表示中， 一个索引所表示的元素的左孩子节点的索引
+     *
+     * @param index
+     * @return
+     */
     private int leftChild(int index) {
         return (index * 2) + 1;
     }
 
+    /**
+     * 返回完全二叉树的数组表示中，一个索引所表示的元素的右孩子节点的索引
+     *
+     * @param index
+     * @return
+     */
     private int rightChild(int index) {
         return (index * 2) + 2;
     }
 
+    /**
+     * 时间复杂度：O(logn)
+     * <p>
+     * 入堆
+     *
+     * @param e
+     */
     public void add(E e) {
         data.addLast(e);
         siftUp(data.getSize() - 1);
     }
 
-    private void siftUp(int index) {
+    /*private void siftUp(int index) {
         if (index == 0) {
             return;
         }
@@ -88,35 +113,108 @@ public class MaxHeap<E extends Comparable> {
             data.swap(index, parent);
             siftUp(parent);
         }
+    }*/
+
+
+    private void siftUp(int index) {
+        while (index != 0 && data.get(index).compareTo(data.get(parent(index))) == 1) {
+            data.swap(index, parent(index));
+            index = parent(index);
+        }
     }
+
 
     public E findMax() {
         return data.getFirst();
     }
 
+    /**
+     * 时间复杂度：O(logn)
+     * <p>
+     * 取出堆中最大元素
+     *
+     * @return
+     */
     public E extractMax() {
-        data.swap(0,data.getSize()-1);
+        if (data.isEmpty()) {
+            throw new IllegalArgumentException("MaxHeap is empty");
+        }
+        data.swap(0, data.getSize() - 1);
         E ret = data.removeLast();
         siftDown(0);
         return ret;
     }
 
-    private void siftDown(int index) {
+    /*private void siftDown(int index) {
 
         int leftIndex = leftChild(index);
         int rightIndex = rightChild(index);
 
-        if (leftIndex >= data.getSize() || rightIndex >= data.getSize()) {
+        if(leftIndex >= data.getSize() && rightIndex>=data.getSize()){
             return;
         }
+        int childIndex;
+        if(leftIndex>=data.getSize()){
+            childIndex = rightIndex;
+        } else if(rightIndex>=data.getSize()){
+            childIndex = leftIndex;
+        }else{
+            childIndex = data.get(leftIndex).compareTo(data.get(rightIndex)) == 1 ? leftIndex : rightIndex;
+        }
 
-        int childIndex = data.get(leftIndex).compareTo(data.get(rightIndex)) == 1 ? leftIndex : rightIndex;
         if (data.get(index).compareTo(data.get(childIndex)) == -1) {
             data.swap(index, childIndex);
-            siftUp(childIndex);
+            siftDown(childIndex);
         }
+    }*/
+
+
+    private void siftDown(int index) {
+
+        int childIndex;
+        while ((childIndex = leftChild(index)) < data.getSize()) {
+
+            if (childIndex + 1 < data.getSize() && data.get(childIndex).compareTo(data.get(childIndex + 1)) == -1)
+                childIndex++;
+            if(data.get(index).compareTo(data.get(childIndex))!=-1){
+                break;
+            }
+            data.swap(index,childIndex);
+            index = childIndex;
+
+        }
+
+       /* while(true){
+            int leftIndex = leftChild(index);
+            int rightIndex = rightChild(index);
+            if(leftIndex >= data.getSize() && rightIndex>=data.getSize()){
+                break;
+            }
+            int childIndex;
+            if(leftIndex>=data.getSize()){
+                childIndex = rightIndex;
+            } else if(rightIndex>=data.getSize()){
+                childIndex = leftIndex;
+            }else{
+                childIndex = data.get(leftIndex).compareTo(data.get(rightIndex)) == 1 ? leftIndex : rightIndex;
+            }
+
+            if (data.get(index).compareTo(data.get(childIndex)) == -1) {
+                data.swap(index, childIndex);
+                index = childIndex;
+                continue;
+            }
+            break;
+
+        }*/
     }
 
+    /**
+     * sh
+     * @param index
+     * @param e
+     * @return
+     */
     public E replace(int index, E e) {
         E ret = data.get(index);
         data.set(index, e);
@@ -126,12 +224,22 @@ public class MaxHeap<E extends Comparable> {
     }
 
     public static void main(String[] args) {
-        int n = 10;
+        int n = 10000;
         MaxHeap<Integer> maxHeap = new MaxHeap<>();
         Random random = new Random();
         for (int i = 0; i < n; i++) {
-            maxHeap.add(random.nextInt(100));
+            maxHeap.add(random.nextInt(Integer.MAX_VALUE));
         }
+
+
+        Integer [] integers = new Integer[]{1,2,3,4,5,6,7,8,9,10};
+        n = integers.length;
+        maxHeap = new MaxHeap<>(integers);
+
+        maxHeap.replace(0,0);
+
+        maxHeap.replace(maxHeap.size()-1,Integer.MAX_VALUE);
+
 
         int[] arr = new int[n];
         for (int i = 0; i < n; i++) {
