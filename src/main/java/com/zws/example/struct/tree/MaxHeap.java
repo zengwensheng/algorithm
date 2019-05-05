@@ -1,7 +1,6 @@
 package com.zws.example.struct.tree;
 
 import com.zws.example.struct.base.Array;
-
 import java.util.Random;
 
 /**
@@ -42,13 +41,14 @@ public class MaxHeap<E extends Comparable> {
     }
 
     /**
-     * 时间复杂度：
+     * 时间复杂度：O(n)
+     * Todo 时间复杂度计算
      *
      * @param arr
      */
     public MaxHeap(E[] arr) {
         data = new Array<>(arr);
-        for (int i = parent(data.getSize()); i >= 0; i--) {
+        for (int i = parent(data.getSize()-1); i >= 0; i--) {
             siftDown(i);
         }
     }
@@ -210,7 +210,7 @@ public class MaxHeap<E extends Comparable> {
     }
 
     /**
-     * sh
+     * 时间复杂度：O(logn)
      * @param index
      * @param e
      * @return
