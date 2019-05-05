@@ -35,7 +35,12 @@ package com.zws.example.struct.tree;
  * 最好情况 2N
  * 最差情况 4N
  * <p>
- * 以求和为例
+ * 以下以求和为例
+ *
+ *
+ * 更多线段树相关的问题： 将【i，j】区间中所有元素+3（懒惰更新），二维线段树，动态线段树，树状数组，RMQ（Range Minimum Query）
+ *
+ *
  */
 public class SegmentTree<E> {
 
