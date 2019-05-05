@@ -46,6 +46,7 @@ public class SegmentTree<E> {
 
     /**
      * 更新操作 O(logn)
+     *
      * @param arr
      * @param merger
      */
@@ -90,7 +91,6 @@ public class SegmentTree<E> {
     }
 
 
-
     /**
      * 返回完全二叉树的数组表示中， 一个索引所表示的元素的左孩子节点的索引
      *
@@ -115,6 +115,7 @@ public class SegmentTree<E> {
     /**
      * 返回区间【queryL,queryR】的值
      * 时间复杂度：O(logn)
+     *
      * @param queryL
      * @param queryR
      * @return
@@ -153,6 +154,32 @@ public class SegmentTree<E> {
     }
 
 
+    public void set(int index, E e) {
+        if (index < 0 || index >= data.length) {
+            throw new IllegalArgumentException("Index is illegal");
+        }
+        data[index] = e;
+        set(0, 0, data.length - 1, index, e);
+    }
+
+    private void set(int treeIndex, int l, int r, int index, E e) {
+        if (l == r) {
+            data[l] = e;
+            return;
+        }
+
+        int mid = (r - l) / 2 + l;
+        int rightIndex = rightChild(treeIndex);
+        int leftIndex = leftChild(treeIndex);
+        if (index > mid) {
+            set(rightIndex, mid + 1, r, index, e);
+        } else {
+            set(leftIndex, l, mid, index, e);
+        }
+        tree[treeIndex] = merger.merge(tree[rightIndex],tree[leftIndex]);
+    }
+
+
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
@@ -172,12 +199,12 @@ public class SegmentTree<E> {
 
 
     public static void main(String[] args) {
-        Integer[] nums = {-2,0,3,-5,2,-1};
-        SegmentTree<Integer> segmentTree = new SegmentTree<>(nums,(a,b)->a+b);
+        Integer[] nums = {-2, 0, 3, -5, 2, -1};
+        SegmentTree<Integer> segmentTree = new SegmentTree<>(nums, (a, b) -> a + b);
         System.out.println(segmentTree);
-        System.out.println(segmentTree.query(0,2));
-        System.out.println(segmentTree.query(2,5));
-        System.out.println(segmentTree.query(0,5));
+        System.out.println(segmentTree.query(0, 2));
+        System.out.println(segmentTree.query(2, 5));
+        System.out.println(segmentTree.query(0, 5));
     }
 
 
