@@ -23,7 +23,7 @@ public class BubbleSortExample {
 
     public static void main(String[] args) {
 
-        int n =1000;
+        int n =3000;
         int rangeL = 0;
         int rangeR = 1000;
         int swapTimes = 10;

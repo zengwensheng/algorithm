@@ -132,7 +132,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
         Node cur = root;
         while (cur != null) {
 
-            if (cur.e.equals(e)) {
+            if (cur.e.compareTo(e)==0) {
                 return true;
             }
 
@@ -155,7 +155,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
             return false;
         }
 
-        if (node.e.equals(e)) {
+        if (node.e.compareTo(e)==0) {
             return true;
         }
 
@@ -166,6 +166,8 @@ public class BinarySearchTree<E extends Comparable<E>> {
         }
         return false;
     }
+
+
 
     /**
      * 前序遍历
@@ -392,7 +394,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
         if (node == null) {
             return node;
         }
-        if (node.e.equals(e)) {
+        if (node.e.compareTo(e)==0) {
 
             //待删除元素左子树为空的情况下
             if (node.left == null) {
