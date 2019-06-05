@@ -52,7 +52,7 @@ public class AVLTree<K extends Comparable<K>, V> {
     private int size;
 
 
-    private int balanceFactor =1;
+    private int balanceFactor = 1;
 
     public AVLTree() {
         root = null;
@@ -69,53 +69,53 @@ public class AVLTree<K extends Comparable<K>, V> {
 
     /**
      * 判断该二叉树是否是一个二分搜素树
+     *
      * @return
      */
-    public boolean isBST(){
-        Array<K> array =new Array<>();
-        inOrder(root,array);
-        for(int i= 1;i<array.getSize();i++){
-             if(array.get(i).compareTo(array.get(i-1))==-1){
-                  return false;
-             }
+    public boolean isBST() {
+        Array<K> array = new Array<>();
+        inOrder(root, array);
+        for (int i = 1; i < array.getSize(); i++) {
+            if (array.get(i).compareTo(array.get(i - 1)) == -1) {
+                return false;
+            }
         }
         return true;
     }
 
-    public boolean isBalanced(){
+    public boolean isBalanced() {
         return isBalanced(root);
     }
 
-    private boolean isBalanced(Node node){
-         if(node==null){
-             return true;
-         }
-         if(Math.abs(getBalanceFactor(node))>balanceFactor){
-             return false;
-         }
-         return isBalanced(node.left)&isBalanced(node.right);
+    private boolean isBalanced(Node node) {
+        if (node == null) {
+            return true;
+        }
+        if (Math.abs(getBalanceFactor(node)) > balanceFactor) {
+            return false;
+        }
+        return isBalanced(node.left) & isBalanced(node.right);
     }
 
-    private void inOrder(Node node,Array<K> array){
-        if(node==null){
+    private void inOrder(Node node, Array<K> array) {
+        if (node == null) {
             return;
         }
 
         Stack<Node> stack = new ArrayStack<>();
         stack.push(node);
 
-        while(stack.isEmpty()){
-            if(stack.peek().left!=null){
+        while (stack.isEmpty()) {
+            if (stack.peek().left != null) {
                 stack.push(stack.peek().left);
                 continue;
             }
             Node cur = stack.pop();
             array.addLast(cur.key);
-            if(cur.right!=null){
+            if (cur.right != null) {
                 stack.push(cur.right);
             }
         }
-
 
 
     }
@@ -144,16 +144,81 @@ public class AVLTree<K extends Comparable<K>, V> {
 
         node.height = Math.max(getHeight(node.left), getHeight(node.right)) + 1;
 
-        //计算平衡
+        //计算平衡因子
         Integer balanceFactor = getBalanceFactor(node);
-        if (Math.abs(balanceFactor) > 1) {
-            System.out.println("unbalanced: " + balanceFactor);
+
+        // 维持树平衡
+
+        // LL
+        if (balanceFactor > 1 && getBalanceFactor(node.left) >= 0) {
+            return rightRotate(node);
+        }
+
+        // LR
+        if (balanceFactor > 1 && getBalanceFactor(node.left) < 0) {
+            node.left = leftRotate(node.left);
+            return rightRotate(node);
+        }
+
+        //RR
+        if (balanceFactor < -1 && getBalanceFactor(node.right) < 0) {
+            return leftRotate(node);
+        }
+
+        //RR
+        if (balanceFactor < -1 && getBalanceFactor(node.right) >= 0) {
+            node.right = rightRotate(node.right);
+            return leftRotate(node);
         }
 
 
         return node;
     }
 
+    // 对节点x进行向右旋转操作，返回旋转后新的根节点y
+    //        x                              y
+    //       / \                           /   \
+    //      y   T4     向右旋转 (y)        z     x
+    //     / \       - - - - - - - ->    / \   / \
+    //    z   T3                       T1  T2 T3 T4
+    //   / \
+    // T1   T2
+    private Node rightRotate(Node x) {
+        Node y = x.left;
+
+        Node t3 = y.right;
+        y.right = x;
+        x.left = t3;
+
+        //更新height
+        x.height = Math.max(getHeight(x.left), getHeight(x.right)) + 1;
+        y.height = Math.max(getHeight(y.left), getHeight(y.right)) + 1;
+
+        return y;
+    }
+
+    // 对节点x进行向左旋转操作，返回旋转后新的根节点y
+    //    x                             y
+    //  /  \                          /   \
+    // T1   y      向左旋转 (y)       x     z
+    //     / \   - - - - - - - ->   / \   / \
+    //   T2  z                     T1 T2 T3 T4
+    //      / \
+    //     T3 T4
+
+    private Node leftRotate(Node x) {
+        Node y = x.right;
+
+        Node t2 = y.left;
+        y.left = x;
+        x.right = t2;
+
+        x.height = Math.max(getHeight(x.left), getHeight(x.right)) + 1;
+        y.height = Math.max(getHeight(y.left), getHeight(y.right)) + 1;
+
+        return y;
+
+    }
 
 
     private Integer getHeight(Node e) {
@@ -497,13 +562,11 @@ public class AVLTree<K extends Comparable<K>, V> {
             System.out.println("Total different words:" + map.size);
             System.out.println("Frequency of PRIDE:" + map.get("pride"));
             System.out.println("Frequency of PREJUDICE:" + map.get("prejudice"));
-            System.out.println("is BST : " + map.isBST() );
-            System.out.println("is Balanced : "+map.isBalanced());
+            System.out.println("is BST : " + map.isBST());
+            System.out.println("is Balanced : " + map.isBalanced());
         }
         System.out.println();
     }
-
-
 
 
 }
