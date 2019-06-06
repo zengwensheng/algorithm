@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class BSTSet<E extends java.lang.Comparable<E>> implements Set<E> {
 
-    private BinarySearchTree<E> bst;
+    private BinarySearchTree<E,Integer> bst;
 
     public BSTSet(){
         bst = new BinarySearchTree();
@@ -28,7 +28,7 @@ public class BSTSet<E extends java.lang.Comparable<E>> implements Set<E> {
      */
     @Override
     public void add(E e) {
-        bst.add(e);
+        bst.add(e,0);
     }
     /**
      * 在二分搜索树平衡情况下

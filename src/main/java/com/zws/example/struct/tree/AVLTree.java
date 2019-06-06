@@ -147,26 +147,30 @@ public class AVLTree<K extends Comparable<K>, V> {
         //计算平衡因子
         Integer balanceFactor = getBalanceFactor(node);
 
+        if(Math.abs(balanceFactor)<=this.balanceFactor){
+            return node;
+        }
+
         // 维持树平衡
 
         // LL
-        if (balanceFactor > 1 && getBalanceFactor(node.left) >= 0) {
+        if (balanceFactor > 0 && getBalanceFactor(node.left) >= 0) {
             return rightRotate(node);
         }
 
         // LR
-        if (balanceFactor > 1 && getBalanceFactor(node.left) < 0) {
+        if (balanceFactor > 0  && getBalanceFactor(node.left) < 0) {
             node.left = leftRotate(node.left);
             return rightRotate(node);
         }
 
         //RR
-        if (balanceFactor < -1 && getBalanceFactor(node.right) < 0) {
+        if (balanceFactor < 0 && getBalanceFactor(node.right) < 0) {
             return leftRotate(node);
         }
 
         //RR
-        if (balanceFactor < -1 && getBalanceFactor(node.right) >= 0) {
+        if (balanceFactor < 0 && getBalanceFactor(node.right) >= 0) {
             node.right = rightRotate(node.right);
             return leftRotate(node);
         }
@@ -283,184 +287,7 @@ public class AVLTree<K extends Comparable<K>, V> {
     }
 
 
-    /**
-     * 前序遍历
-     */
-    public void preOrder() {
-        if (root == null) {
-            return;
-        }
-        Stack<Node> stack = new ArrayStack<>();
-        stack.push(root);
 
-        while (!stack.isEmpty()) {
-            Node cur = stack.pop();
-            System.out.println(cur.key);
-            if (cur.right != null) {
-                stack.push(cur.right);
-            }
-            if (cur.left != null) {
-                stack.push(cur.left);
-            }
-        }
-
-        //preOrder(root);
-    }
-
-    // 递归前序遍历
-    private void preOrder(Node node) {
-        if (node == null) {
-            return;
-        }
-        System.out.println(node.key);
-        preOrder(node.left);
-        preOrder(node.right);
-
-    }
-
-    /**
-     * 中序遍历
-     */
-    public void inOrder() {
-        if (root == null) {
-            return;
-        }
-
-
-        Stack<Node> stack = new ArrayStack<>();
-        Node cur = root;
-
-        while (cur != null || !stack.isEmpty()) {
-
-            while (cur != null) {
-                stack.push(cur);
-                cur = cur.left;
-            }
-
-            cur = stack.pop();
-            System.out.println(cur.key);
-            if (cur.right != null) {
-                cur = cur.right;
-            } else {
-                cur = null;
-            }
-
-
-        }
-
-
-        // inOrder(root);
-    }
-
-    //递归中序遍历
-    private void inOrder(Node node) {
-        if (node == null) {
-            return;
-        }
-        inOrder(node.left);
-        System.out.println(node.key);
-        inOrder(node.right);
-
-    }
-
-    /**
-     * 后序遍历
-     */
-    public void postOrder() {
-        if (root == null) {
-            return;
-        }
-
-        Stack<Node> nodeStack = new ArrayStack<>();
-        nodeStack.push(root);
-        Array<Node> nodeArray = new Array<>();
-
-        while (!nodeStack.isEmpty()) {
-
-            Node cur = nodeStack.pop();
-
-            if (nodeArray.contains(cur)) {
-                System.out.println(cur.key);
-                continue;
-            }
-            if (cur.left == null && cur.right == null) {
-                System.out.println(cur.key);
-                continue;
-            }
-            nodeStack.push(cur);
-            nodeArray.addLast(cur);
-
-            if (cur.right != null) {
-                nodeStack.push(cur.right);
-            }
-
-            if (cur.left != null) {
-                nodeStack.push(cur.left);
-            }
-
-        }
-
-
-
-
-        /*postOrder(root);*/
-    }
-
-    // 递归后序遍历
-    private void postOrder(Node node) {
-        if (node == null) {
-            return;
-        }
-        postOrder(node.left);
-        postOrder(node.right);
-        System.out.println(node.key);
-    }
-
-    /**
-     * 层序遍历
-     */
-    public void levelOrder() {
-        if (root == null) {
-            return;
-        }
-        Queue<Node> nodeQueue = new LinkedListQueue<>();
-        nodeQueue.enqueue(root);
-        while (!nodeQueue.isEmpty()) {
-            Node cur = nodeQueue.dequeue();
-            System.out.println(cur.key);
-            if (cur.left != null) {
-                nodeQueue.enqueue(cur.left);
-            }
-            if (cur.right != null) {
-                nodeQueue.enqueue(cur.right);
-            }
-
-        }
-
-    }
-
-
-    // 从二分搜索树中删除最小值所在节点, 返回最小值
-    public K removeMin() {
-        Node ret = minimum(root);
-        removeMin(root);
-        return ret.key;
-
-    }
-
-    // 删除掉以node为根的二分搜索树中的最小节点
-    // 返回删除节点后新的二分搜索树的根
-    private Node removeMin(Node node) {
-        if (node.left == null) {
-            Node right = node.right;
-            node.right = null;
-            size--;
-            return right;
-        }
-        node.left = removeMin(node.left);
-        return node;
-
-    }
 
     // 返回以node为根的二分搜索树的最小值所在的节点
     private Node minimum(Node e) {
@@ -471,33 +298,6 @@ public class AVLTree<K extends Comparable<K>, V> {
     }
 
 
-    // 从二分搜索树中删除最大值所在节点
-    public K removeMax() {
-        Node del = maximum(root);
-        root = removeMax(root);
-        return del.key;
-    }
-
-    // 删除掉以node为根的二分搜索树中的最大节点
-    // 返回删除节点后新的二分搜索树的根
-    private Node removeMax(Node node) {
-        if (node.right == null) {
-            Node left = node.left;
-            node.left = null;
-            size--;
-            return left;
-        }
-        node.right = removeMax(node.right);
-        return node;
-    }
-
-    // 返回以node为根的二分搜索树的最大值所在的节点
-    private Node maximum(Node node) {
-        while (node.right != null) {
-            node = node.right;
-        }
-        return node;
-    }
 
     //从二分搜索树中删除元素为e的节点
     public void remove(K e) {
@@ -510,6 +310,9 @@ public class AVLTree<K extends Comparable<K>, V> {
         if (node == null) {
             return node;
         }
+
+         Node res = null;
+
         if (node.key.compareTo(e) == 0) {
 
             //待删除元素左子树为空的情况下
@@ -517,35 +320,76 @@ public class AVLTree<K extends Comparable<K>, V> {
                 Node right = node.right;
                 node.right = null;
                 size--;
-                return right;
-            }
+                res = right;
+            }else
             //待删除元素右子树为空的情况下
             if (node.right == null) {
                 Node left = node.left;
                 node.left = null;
                 size--;
-                return left;
-            }
+                res  = left;
+            }else {
 
-            //待删除元素左，右子树都不为空的情况下，找到右子树中最小元素或左子树最大元素代替当前元素
-            Node successor = minimum(node.right);
-            successor.right = remove(successor.key, node.right);
-            successor.left = node.left;
-            return successor;
+                //待删除元素左，右子树都不为空的情况下，找到右子树中最小元素或左子树最大元素代替当前元素
+                Node successor = minimum(node.right);
+                successor.right = remove(successor.key, node.right);
+                successor.left = node.left;
+                res  = successor;
+            }
         }
 
         if (node.key.compareTo(e) > 0) {
             node.left = remove(e, node.left);
+            res = node;
         } else if (node.key.compareTo(e) < 0) {
             node.right = remove(e, node.right);
+            res = node;
         }
 
-        return node;
+        if(res==null){
+            return res;
+        }
+
+        res.height = Math.max(getHeight(res.left), getHeight(res.right)) + 1;
+
+        //计算平衡因子
+        Integer balanceFactor = getBalanceFactor(res);
+
+        if(Math.abs(balanceFactor)<=this.balanceFactor){
+            return res;
+        }
+
+        // 维持树平衡
+
+        // LL
+        if (balanceFactor > 0 && getBalanceFactor(res.left) >= 0) {
+            return rightRotate(res);
+        }
+
+        // LR
+        if (balanceFactor > 0  && getBalanceFactor(res.left) < 0) {
+            res.left = leftRotate(res.left);
+            return rightRotate(res);
+        }
+
+        //RR
+        if (balanceFactor < 0 && getBalanceFactor(res.right) < 0) {
+            return leftRotate(res);
+        }
+
+        //RR
+        if (balanceFactor < 0 && getBalanceFactor(res.right) >= 0) {
+            res.right = rightRotate(res.right);
+            return leftRotate(res);
+        }
+
+
+        return res;
     }
 
 
     public static void main(String[] args) {
-        System.out.println("Pride and Prejudice");
+        /*System.out.println("Pride and Prejudice");
         Array<String> words = new Array<>();
         if (FileUtil.readFile(AVLTree.class.getResource("/").getFile() + "pride-and-prejudice.txt", words)) {
             System.out.println("Total words:" + words.getSize());
@@ -558,14 +402,36 @@ public class AVLTree<K extends Comparable<K>, V> {
                     map.add(word, 1);
                 }
             }
-
             System.out.println("Total different words:" + map.size);
             System.out.println("Frequency of PRIDE:" + map.get("pride"));
             System.out.println("Frequency of PREJUDICE:" + map.get("prejudice"));
             System.out.println("is BST : " + map.isBST());
             System.out.println("is Balanced : " + map.isBalanced());
+
+            for (String word : words) {
+                  map.remove(word);
+                  if(!map.isBalanced()){
+                      throw  new IllegalArgumentException();
+                  }
+            }
+
+
         }
-        System.out.println();
+        System.out.println();*/
+
+
+        AVLTree<Integer,Integer> tree = new AVLTree<>();
+        int n = 10000;
+        for(int i = 1;i<n ;i++){
+            tree.add(i,0);
+        }
+
+        for(int i = n;i>0;i--){
+            tree.remove(i);
+            if(!tree.isBalanced()){
+                throw  new IllegalArgumentException();
+            }
+        }
     }
 
 

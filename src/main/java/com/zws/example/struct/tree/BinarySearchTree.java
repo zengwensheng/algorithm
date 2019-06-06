@@ -39,19 +39,21 @@ import java.util.Random;
  * @email 2848392861@qq.com
  * date 2019/3/6
  */
-public class BinarySearchTree<E extends Comparable<E>> {
+public class BinarySearchTree<K extends Comparable<K>,V> {
     class Node {
-        E e;
+        K k;
+        V v;
         Node left, right;
 
-        public Node(E e, Node right, Node left) {
-            this.e = e;
+        public Node(K k,V v, Node right, Node left) {
+            this.k = k;
+            this.v = v;
             this.right = right;
             this.left = left;
         }
 
-        public Node(E e) {
-            this(e, null, null);
+        public Node(K k,V v) {
+            this(k,v, null, null);
         }
     }
 
@@ -76,33 +78,33 @@ public class BinarySearchTree<E extends Comparable<E>> {
      * 在这个树是平衡的情况下
      * 时间复杂度：O(h) = O(logn)
      */
-    public void add(E e) {
+    public void add(K k,V v) {
         //root = add(root, e);
         Node cur = root;
         while (true) {
             if (cur == null) {
-                root = new Node(e);
+                root = new Node(k,v);
                 size++;
                 break;
             }
 
-            if (cur.e.compareTo(e) > 0) {
+            if (cur.k.compareTo(k) > 0) {
                 if (cur.left == null) {
-                    cur.left = new Node(e);
+                    cur.left = new Node(k,v);
                     size++;
                     break;
                 }
                 cur = cur.left;
 
-            } else if (cur.e.compareTo(e) < 0) {
+            } else if (cur.k.compareTo(k) < 0) {
                 if (cur.right == null) {
-                    cur.right = new Node(e);
+                    cur.right = new Node(k,v);
                     size++;
                     break;
                 }
                 cur = cur.right;
             } else {
-                cur.e = e;
+                cur.k = k;
                 break;
             }
         }
@@ -111,15 +113,15 @@ public class BinarySearchTree<E extends Comparable<E>> {
     }
 
     // 递归添加元素
-    private Node add(Node node, E e) {
+    private Node add(Node node, K k,V v) {
         if (node == null) {
             size++;
-            return new Node(e);
+            return new Node(k,v);
         }
-        if (node.e.compareTo(e) > 0) {
-            node.left = add(node.left, e);
-        } else if (node.e.compareTo(e) < 0) {
-            node.right = add(node.right, e);
+        if (node.k.compareTo(k) > 0) {
+            node.left = add(node.left, k,v);
+        } else if (node.k.compareTo(k) < 0) {
+            node.right = add(node.right, k,v);
         }
         return node;
     }
@@ -128,17 +130,17 @@ public class BinarySearchTree<E extends Comparable<E>> {
      * 在这个树是平衡的情况下
      * 时间复杂度：O(h) = O(logn)
      */
-    public Boolean contains(E e) {
+    public Boolean contains(K k) {
         Node cur = root;
         while (cur != null) {
 
-            if (cur.e.compareTo(e)==0) {
+            if (cur.k.compareTo(k)==0) {
                 return true;
             }
 
-            if (cur.e.compareTo(e) > 0) {
+            if (cur.k.compareTo(k) > 0) {
                 cur = cur.left;
-            } else if (cur.e.compareTo(e) < 0) {
+            } else if (cur.k.compareTo(k) < 0) {
                 cur = cur.right;
             }
         }
@@ -149,20 +151,20 @@ public class BinarySearchTree<E extends Comparable<E>> {
     }
 
     // 递归查询元素
-    private Boolean contains(Node node, E e) {
+    private Boolean contains(Node node, K k) {
 
         if (node == null) {
             return false;
         }
 
-        if (node.e.compareTo(e)==0) {
+        if (node.k.compareTo(k)==0) {
             return true;
         }
 
-        if (node.e.compareTo(e) > 0) {
-            return contains(node.left, e);
-        } else if (node.e.compareTo(e) < 0) {
-            return contains(node.right, e);
+        if (node.k.compareTo(k) > 0) {
+            return contains(node.left, k);
+        } else if (node.k.compareTo(k) < 0) {
+            return contains(node.right, k);
         }
         return false;
     }
@@ -181,7 +183,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
 
         while (!stack.isEmpty()) {
             Node cur = stack.pop();
-            System.out.println(cur.e);
+            System.out.println(cur.k);
             if (cur.right != null) {
                 stack.push(cur.right);
             }
@@ -198,7 +200,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
         if (node == null) {
             return;
         }
-        System.out.println(node.e);
+        System.out.println(node.k);
         preOrder(node.left);
         preOrder(node.right);
 
@@ -224,7 +226,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
             }
 
             cur = stack.pop();
-            System.out.println(cur.e);
+            System.out.println(cur.k);
             if (cur.right != null) {
                 cur = cur.right;
             } else {
@@ -243,7 +245,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
             return;
         }
         inOrder(node.left);
-        System.out.println(node.e);
+        System.out.println(node.k);
         inOrder(node.right);
 
     }
@@ -265,11 +267,11 @@ public class BinarySearchTree<E extends Comparable<E>> {
             Node cur = nodeStack.pop();
 
             if (nodeArray.contains(cur)) {
-                System.out.println(cur.e);
+                System.out.println(cur.k);
                 continue;
             }
             if (cur.left == null && cur.right == null) {
-                System.out.println(cur.e);
+                System.out.println(cur.k);
                 continue;
             }
             nodeStack.push(cur);
@@ -297,7 +299,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
         }
         postOrder(node.left);
         postOrder(node.right);
-        System.out.println(node.e);
+        System.out.println(node.k);
     }
 
     /**
@@ -311,7 +313,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
         nodeQueue.enqueue(root);
         while (!nodeQueue.isEmpty()) {
             Node cur = nodeQueue.dequeue();
-            System.out.println(cur.e);
+            System.out.println(cur.k);
             if (cur.left != null) {
                 nodeQueue.enqueue(cur.left);
             }
@@ -325,10 +327,10 @@ public class BinarySearchTree<E extends Comparable<E>> {
 
 
     // 从二分搜索树中删除最小值所在节点, 返回最小值
-    public E removeMin() {
+    public K removeMin() {
         Node ret = minimum(root);
         removeMin(root);
-        return ret.e;
+        return ret.k;
 
     }
 
@@ -356,10 +358,10 @@ public class BinarySearchTree<E extends Comparable<E>> {
 
 
     // 从二分搜索树中删除最大值所在节点
-    public E removeMax() {
+    public K removeMax() {
         Node del = maximum(root);
         root = removeMax(root);
-        return del.e;
+        return del.k;
     }
 
     // 删除掉以node为根的二分搜索树中的最大节点
@@ -384,17 +386,17 @@ public class BinarySearchTree<E extends Comparable<E>> {
     }
 
     //从二分搜索树中删除元素为e的节点
-    public void remove(E e) {
-        root = remove(e, root);
+    public void remove(K k) {
+        root = remove(k, root);
     }
 
     // 删除掉以node节点为根的二分搜索树中值为e的节点
     // 返回删除节点后新的二分搜索树的根
-    private Node remove(E e, Node node) {
+    private Node remove(K k, Node node) {
         if (node == null) {
             return node;
         }
-        if (node.e.compareTo(e)==0) {
+        if (node.k.compareTo(k)==0) {
 
             //待删除元素左子树为空的情况下
             if (node.left == null) {
@@ -413,15 +415,15 @@ public class BinarySearchTree<E extends Comparable<E>> {
 
             //待删除元素左，右子树都不为空的情况下，找到右子树中最小元素或左子树最大元素代替当前元素
             Node successor = minimum(node.right);
-            successor.right = remove(successor.e, node.right);
+            successor.right = remove(successor.k, node.right);
             successor.left = node.left;
             return successor;
         }
 
-        if (node.e.compareTo(e) > 0) {
-            node.left = remove(e, node.left);
-        } else if (node.e.compareTo(e) < 0) {
-            node.right = remove(e, node.right);
+        if (node.k.compareTo(k) > 0) {
+            node.left = remove(k, node.left);
+        } else if (node.k.compareTo(k) < 0) {
+            node.right = remove(k, node.right);
         }
 
         return node;
@@ -445,7 +447,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
             return;
         }
 
-        res.append(generateDepthString(depth) + node.e + "\n");
+        res.append(generateDepthString(depth) + node.k + "\n");
         generateString(node.left, depth + 1, res);
         generateString(node.right, depth + 1, res);
     }
@@ -518,13 +520,13 @@ public class BinarySearchTree<E extends Comparable<E>> {
                 throw new IllegalArgumentException("Error!");
         System.out.println("removeMax test completed.");*/
 
-        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        BinarySearchTree<Integer,Integer> bst = new BinarySearchTree<>();
         Random random = new Random();
 
         int n = 1000;
 
         for (int i = 0; i < n; i++) {
-            bst.add(random.nextInt(n));
+            bst.add(random.nextInt(n),0);
         }
 
         Integer[] order = SortUtil.generateNearlyOrderedArray(n, n);
