@@ -417,6 +417,7 @@ public class BinarySearchTree<K extends Comparable<K>,V> {
             Node successor = minimum(node.right);
             successor.right = remove(successor.k, node.right);
             successor.left = node.left;
+            node.left = node.right = null;
             return successor;
         }
 

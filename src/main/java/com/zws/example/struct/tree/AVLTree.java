@@ -10,6 +10,7 @@ import com.zws.util.FileUtil;
 import com.zws.util.SortUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 
@@ -165,12 +166,12 @@ public class AVLTree<K extends Comparable<K>, V> {
         }
 
         //RR
-        if (balanceFactor < 0 && getBalanceFactor(node.right) < 0) {
+        if (balanceFactor < 0 && getBalanceFactor(node.right) <= 0) {
             return leftRotate(node);
         }
 
-        //RR
-        if (balanceFactor < 0 && getBalanceFactor(node.right) >= 0) {
+        //RL
+        if (balanceFactor < 0 && getBalanceFactor(node.right) > 0) {
             node.right = rightRotate(node.right);
             return leftRotate(node);
         }
@@ -300,8 +301,13 @@ public class AVLTree<K extends Comparable<K>, V> {
 
 
     //从二分搜索树中删除元素为e的节点
-    public void remove(K e) {
-        root = remove(e, root);
+    public V remove(K k) {
+        Node ret = getNode(root,k);
+        if(ret!=null) {
+            root = remove(k, root);
+            return ret.value;
+        }
+        return null;
     }
 
     // 删除掉以node节点为根的二分搜索树中值为e的节点
@@ -334,9 +340,10 @@ public class AVLTree<K extends Comparable<K>, V> {
                 Node successor = minimum(node.right);
                 successor.right = remove(successor.key, node.right);
                 successor.left = node.left;
+                node.left = node.right = null;
                 res  = successor;
             }
-        }
+        }else
 
         if (node.key.compareTo(e) > 0) {
             node.left = remove(e, node.left);
@@ -373,12 +380,12 @@ public class AVLTree<K extends Comparable<K>, V> {
         }
 
         //RR
-        if (balanceFactor < 0 && getBalanceFactor(res.right) < 0) {
+        if (balanceFactor < 0 && getBalanceFactor(res.right) <= 0) {
             return leftRotate(res);
         }
 
-        //RR
-        if (balanceFactor < 0 && getBalanceFactor(res.right) >= 0) {
+        //RL
+        if (balanceFactor < 0 && getBalanceFactor(res.right) > 0) {
             res.right = rightRotate(res.right);
             return leftRotate(res);
         }
@@ -389,7 +396,7 @@ public class AVLTree<K extends Comparable<K>, V> {
 
 
     public static void main(String[] args) {
-        /*System.out.println("Pride and Prejudice");
+        System.out.println("Pride and Prejudice");
         Array<String> words = new Array<>();
         if (FileUtil.readFile(AVLTree.class.getResource("/").getFile() + "pride-and-prejudice.txt", words)) {
             System.out.println("Total words:" + words.getSize());
@@ -408,19 +415,17 @@ public class AVLTree<K extends Comparable<K>, V> {
             System.out.println("is BST : " + map.isBST());
             System.out.println("is Balanced : " + map.isBalanced());
 
-            for (String word : words) {
-                  map.remove(word);
-                  if(!map.isBalanced()){
-                      throw  new IllegalArgumentException();
-                  }
+            for(String word: words){
+                map.remove(word);
+                if(!map.isBST() || !map.isBalanced())
+                    throw new RuntimeException();
             }
 
-
         }
-        System.out.println();*/
+        System.out.println();
 
 
-        AVLTree<Integer,Integer> tree = new AVLTree<>();
+        /*AVLTree<Integer,Integer> tree = new AVLTree<>();
         int n = 10000;
         for(int i = 1;i<n ;i++){
             tree.add(i,0);
@@ -431,7 +436,7 @@ public class AVLTree<K extends Comparable<K>, V> {
             if(!tree.isBalanced()){
                 throw  new IllegalArgumentException();
             }
-        }
+        }*/
     }
 
 
