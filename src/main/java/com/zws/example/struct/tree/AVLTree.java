@@ -424,19 +424,6 @@ public class AVLTree<K extends Comparable<K>, V> {
         }
         System.out.println();
 
-
-        /*AVLTree<Integer,Integer> tree = new AVLTree<>();
-        int n = 10000;
-        for(int i = 1;i<n ;i++){
-            tree.add(i,0);
-        }
-
-        for(int i = n;i>0;i--){
-            tree.remove(i);
-            if(!tree.isBalanced()){
-                throw  new IllegalArgumentException();
-            }
-        }*/
     }
 
 

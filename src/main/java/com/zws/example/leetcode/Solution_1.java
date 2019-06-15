@@ -1,6 +1,5 @@
 package com.zws.example.leetcode;
 
-import com.zws.example.sort.InsertionSortExample;
 import com.zws.util.SortUtil;
 
 import java.time.Duration;
@@ -8,7 +7,6 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 
 /**
  * @author zws
@@ -25,7 +23,7 @@ import java.util.function.Consumer;
  * <p>
  * 您可以假设每个输入只有一个解决方案，并且您可能不会两次使用相同的元素。
  */
-public class TwoSumExample {
+public class Solution_1 {
 
 
     public static void main(String[] args) {
@@ -39,8 +37,8 @@ public class TwoSumExample {
         arrays[1]=3;
         arrays[2]=3;
 
-        SortUtil.printArray(TwoSumExample.calculateTime("Optimal: Two Sum", TwoSumExample::twoSum, arrays,target));
-        SortUtil.printArray(TwoSumExample.calculateTime("Optimal: Two Sum Advance1", TwoSumExample::twoSumAdvance1, arrays,target));
+        SortUtil.printArray(Solution_1.calculateTime("Optimal: Two Sum", Solution_1::twoSum, arrays,target));
+        SortUtil.printArray(Solution_1.calculateTime("Optimal: Two Sum Advance1", Solution_1::twoSumAdvance1, arrays,target));
 
 
 
@@ -51,8 +49,8 @@ public class TwoSumExample {
         /**
          * 最差测试
          */
-        SortUtil.printArray(TwoSumExample.calculateTime("Worst: Two Sum", TwoSumExample::twoSum, arrays,target));
-        SortUtil.printArray(TwoSumExample.calculateTime("Optimal: Two Sum Advance1", TwoSumExample::twoSumAdvance1, arrays,target));
+        SortUtil.printArray(Solution_1.calculateTime("Worst: Two Sum", Solution_1::twoSum, arrays,target));
+        SortUtil.printArray(Solution_1.calculateTime("Optimal: Two Sum Advance1", Solution_1::twoSumAdvance1, arrays,target));
 
 
 
