@@ -1,5 +1,6 @@
 package com.zws.example.struct.tree;
 
+import com.sun.org.apache.regexp.internal.RE;
 import com.zws.example.struct.base.Array;
 import com.zws.util.FileUtil;
 
@@ -23,7 +24,7 @@ import com.zws.util.FileUtil;
 public class RBTree<K extends Comparable<K>, V> {
 
     private final boolean RED = true;
-    private final boolean BLOCK = false;
+    private final boolean BLACK = false;
 
 
     private class Node {
@@ -57,9 +58,42 @@ public class RBTree<K extends Comparable<K>, V> {
 
     private boolean isRed(Node node) {
         if (node == null) {
-            return BLOCK;
+            return BLACK;
         }
         return node.color;
+    }
+
+    //   node                     x
+    //  /   \     左旋转         /  \
+    // T1   x   --------->   node   T3
+    //     / \              /   \
+    //    T2 T3            T1   T2
+    private Node leftRotate(Node node){
+        Node x = node.right;
+        node.right = x.left;
+        x.left = node;
+        x.color = node.color;
+        node.color = RED;
+        return x;
+    }
+
+    //     node                   x
+    //    /   \     右旋转       /  \
+    //   x    T2   ------->   y   node
+    //  / \                       /  \
+    // y  T1                     T1  T2
+    private Node rightRotate(Node node){
+        Node x = node.left;
+        node.left = x.right;
+        x.right = node;
+        x.color = node.color;
+        node.color = RED;
+        return x;
+    }
+
+    private void flipColors(Node node){
+        node.color = RED;
+        node.left.color = node.right.color = BLACK;
     }
 
     public void add(K key, V value) {
@@ -78,6 +112,16 @@ public class RBTree<K extends Comparable<K>, V> {
             node.right = add(node.right, key, value);
         } else {
             node.value = value;
+        }
+
+        if(isRed(node.right)&&!isRed(node.left)){
+            node = leftRotate(node);
+        }
+        if(isRed(node.left)&&isRed(node.left.left)){
+            node = rightRotate(node);
+        }
+        if(isRed(node.left)&&isRed(node.right)){
+             flipColors(node);
         }
         return node;
     }
@@ -125,6 +169,7 @@ public class RBTree<K extends Comparable<K>, V> {
         return null;
     }
 
+    // Todo: 删除没有维护自平衡
     private Node remove(Node node, K key) {
         if (node == null) {
             return null;

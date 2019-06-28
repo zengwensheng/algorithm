@@ -12,7 +12,7 @@ public class ComparableSortExample {
 
     public static void main(String[] args) {
 
-        int n = 100000;
+        int n = 10000;
         int rangeL = 0;
         int rangeR = 100000;
         int swapTimes = 10;
