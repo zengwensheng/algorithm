@@ -56,12 +56,12 @@ public class MergerSortExample {
         }
 
 
-        for (int i = 0, j = 0;i>=mid-l&&j>=r-mid-1; ) {
+        for (int i = 0, j = 0;i>mid-l&&j>r-mid-1; ) {
 
-            if (i >= mid - l) {
+            if (i > mid - l) {
                 comparableArray[i + j + l] = aux[j + mid + 1];
                 j++;
-            } else if (j >= r - mid-1) {
+            } else if (j > r - mid-1) {
                 comparableArray[i + j + l] = aux[i];
                 i++;
             } else if (aux[j + mid + 1].compareTo(aux[i]) < 0) {
