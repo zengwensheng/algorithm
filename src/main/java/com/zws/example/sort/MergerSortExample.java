@@ -7,28 +7,51 @@ import com.zws.util.SortUtil;
  * @author zws
  * @email 2848392861@qq.com
  * date 2019/6/26
+ * <p>
+ * 归并排序（MERGE-SORT）
+ * O（nlogn）
+ * 是建立在归并操作上的一种有效的排序算法,该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。
+ * 将已有序的子序列合并，得到完全有序的序列；即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有序表，称为二路归并。
  */
 public class MergerSortExample {
 
     public static void main(String[] args) {
-        int n = 10000;
+        int n = 1000000;
         int rangeL = 0;
-        int rangeR = 10000;
-        int swapTimes = 0;
+        int rangeR = 100000000;
+        int swapTimes = 100;
 
-        Integer[] arrays = SortUtil.generateRandomArray(n,rangeL,rangeR);
+        Integer[] arrays = SortUtil.generateRandomArray(n, rangeL, rangeR);
+        Integer[] arrays2 = arrays.clone();
+        Integer[] arrays3 = arrays.clone();
 
+        CalculateTimeUtil.calculateTime("Worst: merger sort", MergerSortExample::mergerSort, arrays);
+        //SortUtil.printArray(arrays);
 
-        arrays = new Integer[]{10,8,9,7};
+        CalculateTimeUtil.calculateTime("Worst: merger sort 2", MergerSortExample::mergerSort2, arrays2);
+        // SortUtil.printArray(arrays2);
 
-        CalculateTimeUtil.calculateTime("merger sort",MergerSortExample::mergerSort,arrays);
-        SortUtil.printArray(arrays);
+        CalculateTimeUtil.calculateTime("Worst: merger sort bu", MergerSortExample::mergeSortBU, arrays3);
+        // SortUtil.printArray(arrays3);
+
+        arrays = SortUtil.generateNearlyOrderedArray(n, swapTimes);
+        arrays2 = arrays.clone();
+
+        CalculateTimeUtil.calculateTime("Optimal: merger sort", MergerSortExample::mergerSort, arrays);
+        // SortUtil.printArray(arrays);
+
+        CalculateTimeUtil.calculateTime("Optimal: merger sort 2", MergerSortExample::mergerSort2, arrays2);
+        // SortUtil.printArray(arrays2);
+
+        CalculateTimeUtil.calculateTime("Optimal: merger sort bu", MergerSortExample::mergeSortBU, arrays3);
+        // SortUtil.printArray(arrays3);
+
 
     }
 
     // 递归使用归并排序 将数组【l,r】区间的元素排序
     public static void mergerSort(Comparable[] comparableArray) {
-        mergerSort(comparableArray,0,comparableArray.length-1);
+        mergerSort(comparableArray, 0, comparableArray.length - 1);
     }
 
 
@@ -41,8 +64,51 @@ public class MergerSortExample {
         }
         int mid = (r - l) / 2 + l;
         mergerSort(comparableArray, l, mid);
-        mergerSort(comparableArray, mid + 1, l);
+        mergerSort(comparableArray, mid + 1, r);
         merger(comparableArray, l, mid, r);
+
+    }
+
+
+    // 递归使用归并排序 将数组【l,r】区间的元素排序
+    public static void mergerSort2(Comparable[] comparableArray) {
+        mergerSort2(comparableArray, 0, comparableArray.length - 1);
+    }
+
+
+    // 递归使用归并排序 将数组【l,r】区间的元素排序
+    private static void mergerSort2(Comparable[] comparableArray, int l, int r) {
+
+        // 对于小规模的数组 进行查询排序
+        if (r - l <= 15) {
+            InsertionSortExample.insertionSort(comparableArray, l, r);
+            return;
+        }
+        int mid = (r - l) / 2 + l;
+        mergerSort(comparableArray, l, mid);
+        mergerSort(comparableArray, mid + 1, r);
+        //对于数组[mid] <= 数组[mid+1] 的情况，不进行merge
+        //对于近乎有序的数组非常有效，但是对于一般情况，有一定的性能损失
+        if (comparableArray[mid].compareTo(comparableArray[mid + 1]) > 0) {
+            merger(comparableArray, l, mid, r);
+        }
+
+    }
+
+
+    //
+    public static void mergeSortBU(Comparable[] comparableArray) {
+        int n = comparableArray.length;
+        int segmentSize = 16;
+        int segmentNumber = 0;
+        for (int i = 0; i < n; i += segmentNumber) {
+            InsertionSortExample.insertionSort(comparableArray, i, Math.min(i += segmentSize, n));
+            segmentNumber++;
+        }
+
+        for (int j = 1; j < segmentNumber; j++) {
+            merger(comparableArray, 0,segmentNumber*j-1, Math.min(j + 1 * segmentNumber,n));
+        }
 
     }
 
@@ -55,21 +121,21 @@ public class MergerSortExample {
             aux[i - l] = comparableArray[i];
         }
 
+        int i = l, j = mid + 1;
+        for (int k = l; k <= r; k++) {
 
-        for (int i = 0, j = 0;i>mid-l&&j>r-mid-1; ) {
-
-            if (i > mid - l) {
-                comparableArray[i + j + l] = aux[j + mid + 1];
+            if (i > mid) {
+                comparableArray[k] = aux[j - l];
                 j++;
-            } else if (j > r - mid-1) {
-                comparableArray[i + j + l] = aux[i];
+            } else if (j > r) {
+                comparableArray[k] = aux[i - l];
                 i++;
-            } else if (aux[j + mid + 1].compareTo(aux[i]) < 0) {
-                comparableArray[i + j + l] = aux[j + mid + 1];
+            } else if (aux[i - l].compareTo(aux[j - l]) > 0) {
+                comparableArray[k] = aux[j - l];
                 j++;
 
             } else {
-                comparableArray[i + j + l] = aux[i];
+                comparableArray[k] = aux[i - l];
                 i++;
             }
         }
