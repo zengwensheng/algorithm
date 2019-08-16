@@ -16,7 +16,7 @@ import com.zws.util.SortUtil;
 public class MergerSortExample {
 
     public static void main(String[] args) {
-        int n = 1000000;
+        int n = 100000;
         int rangeL = 0;
         int rangeR = 100000000;
         int swapTimes = 100;
@@ -32,10 +32,11 @@ public class MergerSortExample {
         // SortUtil.printArray(arrays2);
 
         CalculateTimeUtil.calculateTime("Worst: merger sort bu", MergerSortExample::mergeSortBU, arrays3);
-        // SortUtil.printArray(arrays3);
+        //SortUtil.printArray(arrays3);
 
         arrays = SortUtil.generateNearlyOrderedArray(n, swapTimes);
         arrays2 = arrays.clone();
+        arrays3 = arrays.clone();
 
         CalculateTimeUtil.calculateTime("Optimal: merger sort", MergerSortExample::mergerSort, arrays);
         // SortUtil.printArray(arrays);
@@ -96,19 +97,22 @@ public class MergerSortExample {
     }
 
 
-    //
+    // 自底向上的归并排序
     public static void mergeSortBU(Comparable[] comparableArray) {
         int n = comparableArray.length;
-        int segmentSize = 16;
-        int segmentNumber = 0;
-        for (int i = 0; i < n; i += segmentNumber) {
-            InsertionSortExample.insertionSort(comparableArray, i, Math.min(i += segmentSize, n));
-            segmentNumber++;
+        int segmentSize = 15;
+        for (int i = 0; i < n; i += segmentSize) {
+            InsertionSortExample.insertionSort(comparableArray, i, Math.min(i + segmentSize - 1, n - 1));
         }
 
-        for (int j = 1; j < segmentNumber; j++) {
-            merger(comparableArray, 0,segmentNumber*j-1, Math.min(j + 1 * segmentNumber,n));
+
+        for (int sz = segmentSize; sz <= n; sz += sz) {
+            for (int i = 0; i < n - sz; i += sz + sz) {
+                if (comparableArray[i + sz - 1].compareTo(comparableArray[i + sz]) > 0)
+                    merger(comparableArray, i, i + sz - 1, Math.min(i + sz + sz - 1, n - 1));
+            }
         }
+
 
     }
 
